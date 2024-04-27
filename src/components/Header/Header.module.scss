@@ -1,0 +1,21 @@
+/* ---- Header ---- */
+@import "@resources";
+
+.wrapper {
+  @include transition();
+  width: 100%;
+  z-index: 1000;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background: #f4f4f4;
+}
+
+.sticky {
+  @include transition();
+  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.15);
+}
+
+.navigation {
+  display: flex;
+}

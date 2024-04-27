@@ -1,0 +1,54 @@
+/* ---- Variables ---- */
+/* -- Colors -- */
+$white-1: #fff;
+$gray-1: #fdfdfd;
+$black-1: #232323;
+
+$theme-color: #f6110f;
+$background-color: $gray-1;
+
+/* -- Typography -- */
+$font-family: "Montserrat", sans-serif;
+$font-weight: 400;
+$font-size: 22px;
+$font-color: $black-1;
+
+$h1-font-size: 54px;
+$h2-font-size: 36px;
+$h3-font-size: 24px;
+$h4-font-size: 18px;
+
+/* -- Transition -- */
+$transition-property: all;
+$transition-delay: 0.2s;
+$transition-timing: ease;
+
+/* -- Link -- */
+$link-hover-opacity: 0.7;
+
+/* -- Media Query Breakpoints -- */
+$phone: 480;
+$phablet: 576;
+$tablet: 768;
+$tablet-large: 992;
+$laptop: 1200;
+$desktop: 1400;
+
+$burger-point: 1240;
+
+/* -- Container -- */
+$container-default-width: 1350px;
+$container-desktop-gutter: 80;
+$container-laptop-gutter: 50;
+$container-tablet-large-gutter: 32;
+$container-tablet-gutter: 28;
+$container-phablet-gutter: 24;
+
+/* -- Gutters -- */
+$header-padding-desktop-gutter: 25px;
+$header-padding-tablet-large-gutter: 25px;
+$header-padding-tablet-gutter: 25px;
+$header-padding-phablet-gutter: 25px;
+
+$section-gutter: 100px;
+$scroll-margin-top: $section-gutter + $header-padding-tablet-gutter * 2;
