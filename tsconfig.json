@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -21,30 +17,16 @@
     "strictNullChecks": false,
     "baseUrl": "src/",
     "paths": {
-      "@components/*": [
-        "components/*"
-      ],
-      "@sections/*": [
-        "components/sections/*"
-      ],
-      "@data/*": [
-        "data/*"
-      ],
-      "@helpers/*": [
-        "helpers/*"
-      ],
-      "@hooks/*": [
-        "hooks/*"
-      ],
-      "@shared/*": [
-        "shared/*"
-      ],
-      "@store/*": [
-        "store/*"
-      ],
-      "@styles/*": [
-        "styles/*"
-      ]
+      "@components/*": ["components/*"],
+      "@sections/*": ["components/sections/*"],
+      "@data/*": ["data/*"],
+      "@helpers/*": ["helpers/*"],
+      "@hooks/*": ["hooks/*"],
+      "@shared/*": ["shared/*"],
+      "@store/*": ["store/*"],
+      "@public/*": ["../public/*"],
+      "@img/*": ["../public/img/*"],
+      "@styles/*": ["styles/*"]
     },
     "plugins": [
       {
@@ -56,9 +38,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "src/components/Order/FieldList/FieldList.tsx"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

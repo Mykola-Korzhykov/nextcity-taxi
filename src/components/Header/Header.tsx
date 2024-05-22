@@ -29,8 +29,8 @@ const Header: FC = () => {
       <div className="container">
         <nav className={styles.navigation}>
           <Logo />
-          <Phone />
           <Menu />
+          <Phone />
         </nav>
       </div>
     </header>

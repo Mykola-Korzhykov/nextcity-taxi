@@ -5,8 +5,8 @@ import styles from "./Menu.module.scss";
 const Menu = () => {
   return (
     <div className={styles.menu}>
-      <Link href="/">Home</Link>
-      <Link href="/agreement">Agreement</Link>
+      <Link href="/">Главная</Link>
+      <Link href="/agreement">Пользовательское соглашение</Link>
     </div>
   );
 };

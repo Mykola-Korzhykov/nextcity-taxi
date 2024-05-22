@@ -29,6 +29,22 @@ const nextConfig = {
       "@rfs": resolve(__dirname, "node_modules/rfs/scss"),
     };
 
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        "babel-loader",
+        {
+          loader: "react-svg-loader",
+          options: {
+            svgo: {
+              plugins: [{ removeDimensions: true, removeViewBox: false }],
+              floatPrecision: 2,
+            },
+          },
+        },
+      ],
+    });
+
     return config;
   },
 };
