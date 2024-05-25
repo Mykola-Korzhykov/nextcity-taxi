@@ -1,22 +1,29 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.css";
 import { useFormContext, Controller } from "react-hook-form";
+
+import "swiper/scss";
 import styles from "./Tariff.module.scss";
 
-const tarrifs = [
+const tariffs = [
   { label: "Эконом", value: "economy" },
   { label: "Комфорт", value: "comfort" },
   { label: "Бизнес", value: "business" },
+  { label: "Тест", value: "test" },
 ];
 
 const Tariff: FC = () => {
   const { control } = useFormContext<{ tariff: string }>();
+  const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   return (
     <div className={styles.wrapper}>
-      <Swiper spaceBetween={10} slidesPerView={2}>
-        {tarrifs.map((tarrif, index) => (
+      <Swiper
+        spaceBetween={15}
+        slidesPerView={3}
+        onInit={() => setIsInitialized(true)}
+      >
+        {tariffs.map((tariff, index) => (
           <SwiperSlide key={index}>
             <Controller
               name="tariff"
@@ -24,13 +31,13 @@ const Tariff: FC = () => {
               render={({ field }) => (
                 <div
                   className={`${styles.card} ${
-                    field.value === tarrif.value ? styles.selected : ""
-                  }`}
-                  onClick={() => field.onChange(tarrif.value)}
+                    field.value === tariff.value ? styles.selected : ""
+                  } ${isInitialized ? "" : styles.hidden}`}
+                  onClick={() => field.onChange(tariff.value)}
                 >
-                  <label>{tarrif.label}</label>
+                  <label>{tariff.label}</label>
                   <div className={styles.content}>
-                    <p>{tarrif.label}</p>
+                    <p>{tariff.label}</p>
                   </div>
                 </div>
               )}

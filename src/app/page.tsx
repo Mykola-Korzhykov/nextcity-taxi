@@ -1,4 +1,4 @@
-import { Offer } from "@sections/Offer/Offer";
+import Offer from "@sections/Offer/Offer";
 
 export default function Home() {
   return (

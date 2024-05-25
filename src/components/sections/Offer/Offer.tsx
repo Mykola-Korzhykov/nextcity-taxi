@@ -19,4 +19,4 @@ const Offer: FC = () => {
   );
 };
 
-export { Offer };
+export default Offer;

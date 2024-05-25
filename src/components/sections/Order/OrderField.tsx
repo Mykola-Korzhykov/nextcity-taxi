@@ -6,16 +6,11 @@ import CreateIcon from "@img/ui/Field/create.svg";
 import RemoveIcon from "@img/ui/Field/remove.svg";
 import PlaceIcon from "@img/ui/Field/place.svg";
 
+import { IFormValues, IOrderFields } from "interfaces/IField";
 import styles from "./Order.module.scss";
 
-interface Props {
-  createField: any;
-  removeField: any;
-  index: number;
-}
-
-const OrderField: FC<Props> = ({ createField, removeField, index }) => {
-  const { control, register, getValues } = useFormContext();
+const OrderField: FC<IOrderFields> = ({ createField, removeField, index }) => {
+  const { control, register, getValues } = useFormContext<IFormValues>();
 
   const fields = getValues(`fields`);
 

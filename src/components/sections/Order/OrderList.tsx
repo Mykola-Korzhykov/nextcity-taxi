@@ -3,40 +3,36 @@ import { Container } from "react-smooth-dnd";
 import { useFormContext, useFieldArray } from "react-hook-form";
 
 import MemoizedFields from "./hooks/MemoizedFields";
+import { TField } from "interfaces/IField";
 import styles from "./Order.module.scss";
 
-type DropArguments = {
-  removedIndex: number;
-  addedIndex: number;
-};
-
 const OrderList: FC = () => {
-  const { control } = useFormContext();
-  const { fields, insert, remove, move } = useFieldArray({
+  const { control } = useFormContext<Record<string, any>>();
+  const { fields, insert, remove, move } = useFieldArray<Record<string, any>>({
     control,
     name: "fields",
   });
 
-  const createField = (index: number) => {
+  const createField = (index: number): void => {
     insert(index + 1, {});
   };
 
-  const removeField = (index: number) => {
+  const removeField = (index: number): void | boolean => {
     if (fields.length === 2 && index === 1) return false;
     remove(index);
   };
 
-  const onDrop = ({ removedIndex, addedIndex }: DropArguments) => {
+  const onDrop = (removedIndex: number, addedIndex: number): void => {
     move(removedIndex, addedIndex);
   };
 
-  const shouldAnimateDrop = () => {
-    return false; // Возвращаем false, чтобы отключить анимацию при отпускании
+  const shouldAnimateDrop = (): boolean => {
+    return false;
   };
 
   return (
     // @ts-ignore
-    <Container
+    <Container<DragItem>
       dragHandleSelector={`.${styles.dragButton}`}
       lockAxis="y"
       onDrop={onDrop}
@@ -45,7 +41,7 @@ const OrderList: FC = () => {
       shouldAnimateDrop={shouldAnimateDrop}
     >
       <MemoizedFields
-        fields={fields}
+        fields={fields as unknown as TField[]}
         createField={createField}
         removeField={removeField}
       />

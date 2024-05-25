@@ -2,16 +2,12 @@ import React, { FC } from "react";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import OrderList from "./OrderList";
 import Tariff from "./Tariff/Tariff";
-import IField from "interfaces/IField";
+
+import { IFormValues } from "interfaces/IField";
 import styles from "./Order.module.scss";
 
-type FormValues = {
-  fields: IField[];
-  tariff: "economy" | "comfort" | "business";
-};
-
 const Order: FC = () => {
-  const form = useForm<FormValues>({
+  const form = useForm<IFormValues>({
     defaultValues: {
       fields: [
         { route: "", entrance: "" },
@@ -21,7 +17,7 @@ const Order: FC = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+  const onSubmit: SubmitHandler<IFormValues> = (data) => {
     console.log(data);
   };
 
@@ -41,41 +37,3 @@ const Order: FC = () => {
 };
 
 export default Order;
-
-// import { FC } from "react";
-// import { useForm, FormProvider } from "react-hook-form";
-// import OrderList from "./OrderList";
-// import Tariff from "./Tariff/Tariff";
-// import IField from "interfaces/IField";
-// import styles from "./Order.module.scss";
-
-// type FormValues = {
-//   fields: IField[];
-//   selectedOption: string;
-// };
-
-// const Order: FC = () => {
-//   const form = useForm<FormValues>({
-//     defaultValues: {
-//       fields: [
-//         { route: "", entrance: "" },
-//         { route: "", entrance: "" },
-//       ],
-//       selectedOption: "econom",
-//     },
-//   });
-
-//   return (
-//     <FormProvider {...form}>
-//       <form className={styles.form}>
-//         <OrderList />
-//         <Tariff />
-//         <button type="submit" className={styles.submitButton}>
-//           Заказать
-//         </button>
-//       </form>
-//     </FormProvider>
-//   );
-// };
-
-// export default Order;
