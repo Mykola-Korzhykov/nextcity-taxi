@@ -2,15 +2,10 @@ import { FC, useMemo } from "react";
 import { Draggable } from "react-smooth-dnd";
 
 import OrderField from "../OrderField";
+import { IMemoizedFields } from "interfaces/IField";
 import styles from "../Order.module.scss";
 
-type MemoizedFieldsProps = {
-  fields: Array<any>;
-  createField: (index: number) => void;
-  removeField: (index: number) => void;
-};
-
-const MemoizedFields: FC<MemoizedFieldsProps> = ({
+const MemoizedFields: FC<IMemoizedFields> = ({
   fields,
   createField,
   removeField,

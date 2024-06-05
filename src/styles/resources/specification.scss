@@ -135,7 +135,7 @@ textarea {
 
 button {
   border: none;
-  width: 100%;
+  max-width: 400px;
   padding: 10px 0px 10px;
   border-radius: 15px;
   background: $theme-color;
@@ -175,8 +175,8 @@ input {
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* ---- Scroll ---- */

@@ -2,61 +2,93 @@
 @import "@resources";
 
 .wrapper {
-  width: 50%;
-}
-
-.list {
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
-  transition: none !important;
+  position: relative;
+  width: 390px;
 }
 
 .fieldWrapper {
+  margin-bottom: 15px;
+}
+
+.fullField {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .field {
-  position: relative;
   display: flex;
   align-items: center;
   background: $gray-1;
-  border: 3px solid rgba(0, 0, 0, 0);
-  width: 365px;
+  border: 2px solid $gray-1;
+  border-radius: 15px 15px 0 0;
+  width: 100%;
   border-radius: 15px;
+  &:hover {
+    border: 2px solid $theme-color;
+  }
+}
+
+.fieldActive {
+  border: 2px solid $theme-color;
+  border-radius: 15px 15px 0 0;
+  border-bottom: none;
+  &:hover {
+    border-bottom: none;
+  }
 }
 
 .routeInput {
-  margin-left: 13px;
+  padding-left: 13px;
   width: 60%;
-  font-size: 16px;
-  height: 20px;
+  font-size: 18px;
+  height: 24px;
   overflow-y: hidden;
 }
 
 .entranceInput {
-  margin-right: 10px;
   width: 70px;
   text-align: center;
   border-radius: 5px;
   border-width: 1px;
   font-size: 12px;
   padding: 4px;
-  border: 1px solid $gray-2;
+  border: 1px solid $gray-3;
+
+  &::placeholder {
+    color: #999;
+  }
+  &::-webkit-input-placeholder {
+    /* Chrome, Safari, Opera */
+    color: #999;
+  }
+  &:-moz-placeholder {
+    /* Firefox 18- */
+    color: #999;
+  }
+  &::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #999;
+  }
+  &:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #999;
+  }
 }
 
 .dragButton {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: -30px;
   width: 30px;
-  height: 30px;
+  height: 54px;
   cursor: grab;
 
   & svg {
     & path {
       transition: fill 0.2s ease !important;
-      fill: $gray-2;
+      fill: $gray-4;
     }
   }
 
@@ -82,10 +114,12 @@
 .createButton {
   position: relative;
   display: block;
-  width: 50px;
+  width: 52px;
   height: 50px;
+  left: 2px;
+  margin-left: auto;
   cursor: pointer;
-  border-radius: 15px;
+  border-radius: 14.5px;
   padding: 10px;
   background: $theme-color;
   transition: opacity 0.2s ease !important;
@@ -104,10 +138,12 @@
 
 .removeButton {
   position: relative;
-  width: 50px;
+  width: 52px;
   height: 50px;
+  left: 2px;
+  margin-left: auto;
   cursor: pointer;
-  border-radius: 15px;
+  border-radius: 14.5px;
   padding: 10px;
   background: $theme-color;
   transition: opacity 0.2s ease !important;
@@ -129,6 +165,7 @@
   position: relative;
   width: 50px;
   height: 50px;
+  margin-left: auto;
   cursor: pointer;
   border-radius: 15px;
   transition: opacity 0.2s ease !important;
@@ -146,7 +183,7 @@
 }
 
 .show {
-  display: inline-block;
+  display: block;
 }
 
 .hide {

@@ -1,22 +1,51 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.css";
 import { useFormContext, Controller } from "react-hook-form";
+import EconomyIcon from "@img/ui/Tariff/economy.svg";
+
+import { IFormValues } from "interfaces/IField";
+import "swiper/scss";
 import styles from "./Tariff.module.scss";
 
-const tarrifs = [
-  { label: "Эконом", value: "economy" },
-  { label: "Комфорт", value: "comfort" },
-  { label: "Бизнес", value: "business" },
+const tariffs = [
+  {
+    label: "Эконом",
+    value: "economy",
+    component: <EconomyIcon />,
+    price: "От 115 ₽",
+  },
+  {
+    label: "Комфорт",
+    value: "comfort",
+    component: <EconomyIcon />,
+    price: "От 125 ₽",
+  },
+  {
+    label: "Бизнес",
+    value: "business",
+    component: <EconomyIcon />,
+    price: "От 150 ₽",
+  },
+  {
+    label: "Тест",
+    value: "test",
+    component: <EconomyIcon />,
+    price: "От 160 ₽",
+  },
 ];
 
 const Tariff: FC = () => {
-  const { control } = useFormContext<{ tariff: string }>();
+  const { control } = useFormContext<IFormValues>();
+  const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   return (
     <div className={styles.wrapper}>
-      <Swiper spaceBetween={10} slidesPerView={2}>
-        {tarrifs.map((tarrif, index) => (
+      <Swiper
+        spaceBetween={15}
+        slidesPerView={3.2}
+        onInit={() => setIsInitialized(true)}
+      >
+        {tariffs.map((tariff, index) => (
           <SwiperSlide key={index}>
             <Controller
               name="tariff"
@@ -24,13 +53,14 @@ const Tariff: FC = () => {
               render={({ field }) => (
                 <div
                   className={`${styles.card} ${
-                    field.value === tarrif.value ? styles.selected : ""
-                  }`}
-                  onClick={() => field.onChange(tarrif.value)}
+                    field.value === tariff.value ? styles.selected : ""
+                  } ${isInitialized ? "" : styles.hidden}`}
+                  onClick={() => field.onChange(tariff.value)}
                 >
-                  <label>{tarrif.label}</label>
+                  <div className={styles.tariffIcon}>{tariff.component}</div>
+                  <label className={styles.label}>{tariff.label}</label>
                   <div className={styles.content}>
-                    <p>{tarrif.label}</p>
+                    <p>{tariff.price}</p>
                   </div>
                 </div>
               )}
