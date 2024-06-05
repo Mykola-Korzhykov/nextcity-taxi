@@ -2,7 +2,6 @@ import { FC, useMemo } from "react";
 import { Draggable } from "react-smooth-dnd";
 
 import OrderField from "../OrderField";
-
 import { IMemoizedFields } from "interfaces/IField";
 import styles from "../Order.module.scss";
 

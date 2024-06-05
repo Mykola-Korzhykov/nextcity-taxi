@@ -3,7 +3,7 @@ import { Container } from "react-smooth-dnd";
 import { useFormContext, useFieldArray } from "react-hook-form";
 
 import MemoizedFields from "./hooks/MemoizedFields";
-import { TField } from "interfaces/IField";
+import { TField, TDropArguments } from "interfaces/IField";
 import styles from "./Order.module.scss";
 
 const OrderList: FC = () => {
@@ -18,12 +18,14 @@ const OrderList: FC = () => {
   };
 
   const removeField = (index: number): void | boolean => {
-    if (fields.length === 2 && index === 1) return false;
+    if (fields.length <= 2 && index >= fields.length - 1) return false;
     remove(index);
   };
 
-  const onDrop = (removedIndex: number, addedIndex: number): void => {
-    move(removedIndex, addedIndex);
+  const onDrop = ({ removedIndex, addedIndex }: TDropArguments) => {
+    if (removedIndex !== null && addedIndex !== null) {
+      move(removedIndex, addedIndex);
+    }
   };
 
   const shouldAnimateDrop = (): boolean => {

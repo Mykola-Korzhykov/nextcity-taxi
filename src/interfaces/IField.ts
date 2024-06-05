@@ -1,6 +1,12 @@
 export type TField = {
   route: string;
   entrance: string;
+  select: string;
+};
+
+export type TDropArguments = {
+  removedIndex: number;
+  addedIndex: number;
 };
 
 export interface IFormValues {
