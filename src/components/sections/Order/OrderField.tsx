@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, useState, useRef, useEffect } from "react";
+import { FC, ChangeEvent, useState, useRef } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 
 import DGDIcon from "@img/ui/Field/dgd.svg";
@@ -6,6 +6,7 @@ import CreateIcon from "@img/ui/Field/create.svg";
 import RemoveIcon from "@img/ui/Field/remove.svg";
 import PlaceIcon from "@img/ui/Field/place.svg";
 import Select from "@components/ui/Select/Select";
+import useClickOutside from "@hooks/useClickOutside";
 
 import { IFormValues, IOrderFields } from "interfaces/IField";
 import styles from "./Order.module.scss";
@@ -37,26 +38,10 @@ const OrderField: FC<IOrderFields> = ({ createField, removeField, index }) => {
     }
   };
 
-  useEffect(() => {
-    if (showSelect) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [showSelect]);
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      selectRef.current &&
-      !selectRef.current.contains(event.target as Node)
-    ) {
-      setShowSelect(false);
-    }
+  useClickOutside(selectRef, showSelect, () => {
+    setShowSelect(false);
     setValue(`fields.${index}.route`, "");
-  };
+  });
 
   return (
     <div className={styles.fieldWrapper}>

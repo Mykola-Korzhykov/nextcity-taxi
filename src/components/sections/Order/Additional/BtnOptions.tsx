@@ -1,0 +1,20 @@
+import Date from "@img/ui/Additional/date.svg";
+import Arrow from "@img/ui/Additional/arrow.svg";
+
+import styles from "./Additional.module.scss";
+
+const BtnOptions = () => {
+  return (
+    <div className={styles.additionalItem}>
+      <div className={styles.additionalIcon}>
+        <Date />
+      </div>
+      <span>Доп. опции</span>
+      <div className={styles.additionalIcon}>
+        <Arrow />
+      </div>
+    </div>
+  );
+};
+
+export default BtnOptions;
