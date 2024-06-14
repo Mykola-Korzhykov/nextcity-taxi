@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Container } from "react-smooth-dnd";
 import { useFormContext, useFieldArray } from "react-hook-form";
 
-import MemoizedFields from "./hooks/MemoizedFields";
+import MemoizedFields from "./memo/MemoizedFields";
 import { TField, TDropArguments } from "interfaces/IField";
 import styles from "./Order.module.scss";
 

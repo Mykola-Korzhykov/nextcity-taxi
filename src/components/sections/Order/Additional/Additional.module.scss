@@ -1,0 +1,103 @@
+/* ---- Additional ---- */
+@import "@resources";
+
+.additional {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding-bottom: 18px;
+}
+
+.additionalItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.additionalIcon {
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin-right: 6px;
+}
+
+// WindowDate and WindowOptions
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.text {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.date {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.time {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// DatePicker
+
+.datePicker {
+  display: inline-block;
+  position: relative;
+}
+
+.inputWindow {
+  padding: 8px 16px;
+  border: 2px solid $gray-5;
+  background-color: $white-1;
+  border-radius: 10px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.inputWindow:hover {
+  border-color: $theme-color;
+}
+
+.inputWindow::placeholder {
+  font-size: 16px;
+  color: $gray-3;
+}
+
+.popper {
+  z-index: 15;
+}
+
+.calendar {
+  border: 1px solid #ddd;
+  border-radius: 40px;
+  overflow: hidden;
+}
+
+//// Time
+
+.timePicker {
+  width: 100%;
+}
+
+.timeInput {
+  padding: 8px 16px;
+  border: 2px solid $gray-5;
+  background-color: $white-1;
+  border-radius: 10px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+}

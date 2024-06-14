@@ -1,12 +1,22 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
-import OrderList from "./OrderList";
-import Tariff from "./Tariff/Tariff";
+
+import MainForm from "./MainForm";
+import WindowDate from "./Additional/WindowDate";
+import WindowOptions from "./Additional/WindowOptions";
 
 import { IFormValues } from "interfaces/IField";
 import styles from "./Order.module.scss";
 
+enum Window {
+  MAIN_FORM,
+  WINDOW_DATE,
+  WINDOW_OPTIONS,
+}
+
 const Order: FC = () => {
+  const [currentView, setCurrentView] = useState<Window>(Window.MAIN_FORM);
+
   const form = useForm<IFormValues>({
     defaultValues: {
       fields: [
@@ -24,13 +34,11 @@ const Order: FC = () => {
   return (
     <div className={styles.wrapper}>
       <FormProvider {...form}>
-        <form className={styles.form} onSubmit={form.handleSubmit(onSubmit)}>
-          <OrderList />
-          <Tariff />
-          <button type="submit" className={styles.submitButton}>
-            Заказать
-          </button>
-        </form>
+        {currentView === Window.MAIN_FORM && (
+          <MainForm onSubmit={onSubmit} setCurrentView={setCurrentView} />
+        )}
+        {currentView === Window.WINDOW_DATE && <WindowDate />}
+        {currentView === Window.WINDOW_OPTIONS && <WindowOptions />}
       </FormProvider>
     </div>
   );
