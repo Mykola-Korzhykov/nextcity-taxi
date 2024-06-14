@@ -2,6 +2,14 @@
 @import "resources";
 @import "resources/specification";
 
+// Swiper
 .swiper-wrapper {
   padding: 6px 5px 28px 0;
+}
+
+// DatePicker
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: $theme-color !important;
+  color: #fff !important;
 }
