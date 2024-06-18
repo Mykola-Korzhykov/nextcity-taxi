@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopTimePicker } from "@mui/x-date-pickers/DesktopTimePicker";
@@ -12,28 +12,10 @@ import localizedFormat from "dayjs/plugin/localizedFormat";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./Additional.module.scss";
 
-import TextField from "@mui/material/TextField";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import { ruRU } from "@mui/x-date-pickers/locales";
 
 dayjs.extend(localizedFormat);
 dayjs.locale("ru");
-
-// Компонент для отображения поля с иконкой календаря
-const CustomInput: FC<{ value: string; onClick: () => void }> = ({
-  value,
-  onClick,
-}) => (
-  <div className={styles.customInput} onClick={onClick}>
-    <TextField
-      fullWidth
-      variant="outlined"
-      value={value}
-      InputProps={{
-        endAdornment: <CalendarTodayIcon className={styles.calendarIcon} />,
-      }}
-    />
-  </div>
-);
 
 const WindowDate: FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
@@ -41,44 +23,96 @@ const WindowDate: FC = () => {
 
   return (
     <div>
-      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
+      <LocalizationProvider
+        dateAdapter={AdapterDayjs}
+        adapterLocale="ru"
+        localeText={{
+          ...ruRU.components.MuiLocalizationProvider.defaultProps.localeText,
+          okButtonLabel: "Сохранить",
+        }}
+      >
         <div className={styles.date}>
           <span className={styles.text}>Выберите дату</span>
-          <div className={styles.datePicker}>
+          <div className={styles.wrapperPicker}>
             <DatePicker
               selected={selectedDate}
               onChange={(date: Date) => setSelectedDate(date)}
               dateFormat="dd/MM/yyyy"
               locale={ru}
               className={styles.inputWindow}
-              popperClassName={styles.popper}
-              calendarClassName={styles.calendar}
-              placeholderText="Дата"
-              customInput={
-                <CustomInput
-                  value={
-                    selectedDate ? dayjs(selectedDate).format("DD/MM/YYYY") : ""
-                  }
-                  onClick={function (): void {
-                    throw new Error("Function not implemented.");
-                  }}
-                />
-              }
             />
           </div>
         </div>
         <div className={styles.time}>
           <span className={styles.text}>Выберите время</span>
-          <div className={styles.datePicker}>
+          <div className={styles.wrapperPicker}>
             <DesktopTimePicker
               value={selectedTime}
+              reduceAnimations={true}
               onChange={(newValue) => setSelectedTime(newValue)}
-              ampm={false} // 24-часовой формат
+              ampm={false}
+              timeSteps={{ minutes: 1 }}
               slotProps={{
                 textField: {
                   fullWidth: true,
                   variant: "outlined",
-                  className: styles.inputWindow,
+                  sx: {
+                    "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+                      border: "none !important",
+                      cursor: "pointer !important",
+                    },
+                    "& .MuiOutlinedInput-root": {
+                      border: "2px solid #ecedf0",
+                      borderRadius: "10px",
+                      cursor: "pointer !important",
+                      "&:hover, &.Mui-focused": {
+                        borderColor: "#f6110f",
+                      },
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      padding: "12px 16px",
+                      color: "#333",
+                    },
+                  },
+                },
+                popper: {
+                  sx: {
+                    "& .MuiPaper-root": {
+                      width: "210px",
+                      boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+                      borderRadius: "10px",
+                      "& .MuiPickersTimePickerToolbar-root": {
+                        backgroundColor: "#f6110f",
+                        color: "#fff",
+                      },
+                      "& .MuiList-root": {
+                        width: "50%",
+                        padding: "0 17px",
+                      },
+                      "& .MuiMultiSectionDigitalClock-root": {
+                        maxHeight: "180px",
+                      },
+                      "& .MuiButtonBase-root": {
+                        borderRadius: "35%",
+                        // backgroundColor: "#fff",
+                        // color: "#f6110f",
+                      },
+                      "& .css-1e3wlyl-MuiButtonBase-root-MuiMenuItem-root-MuiMultiSectionDigitalClockSection-item.Mui-selected":
+                        {
+                          backgroundColor: "#fff",
+                          color: "#f6110f",
+                          fontSize: "24px",
+                        },
+                      "& .css-knqc4i-MuiDialogActions-root": {
+                        justifyContent: "flex-start",
+                      },
+                      "& .css-1e6y48t-MuiButtonBase-root-MuiButton-root": {
+                        fontSize: "16px",
+                        fontWeight: "600 !important",
+                        color: "#f6110f",
+                      },
+                    },
+                  },
                 },
               }}
             />
@@ -90,119 +124,3 @@ const WindowDate: FC = () => {
 };
 
 export default WindowDate;
-
-// import { FC, useState } from "react";
-// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-// import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-// import DatePicker from "react-datepicker";
-
-// import { ru } from "date-fns/locale";
-// import dayjs, { Dayjs } from "dayjs";
-// import "dayjs/locale/ru";
-// import localizedFormat from "dayjs/plugin/localizedFormat"; // Плагин для поддержки форматирования
-
-// import "react-datepicker/dist/react-datepicker.css";
-// import styles from "./Additional.module.scss";
-
-// dayjs.extend(localizedFormat);
-// dayjs.locale("ru"); // Устанавливаем русскую локаль по умолчанию
-
-// const WindowDate: FC = () => {
-//   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-//   const [selectedTime, setSelectedTime] = useState<Dayjs | null>(dayjs());
-
-//   return (
-//     <div>
-//       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
-//         <div className={styles.date}>
-//           <span className={styles.text}>Выберите дату</span>
-//           <div className={styles.datePicker}>
-//             <DatePicker
-//               selected={selectedDate}
-//               onChange={(date: Date) => setSelectedDate(date)}
-//               dateFormat="dd/MM/yyyy"
-//               locale={ru}
-//               className={styles.inputWindow}
-//               popperClassName={styles.popper}
-//               calendarClassName={styles.calendar}
-//             />
-//           </div>
-//         </div>
-//         <div className={styles.time}>
-//           <span className={styles.text}>Выберите время</span>
-//           <div className={styles.datePicker}>
-//             <TimePicker
-//               value={selectedTime}
-//               onChange={(newValue) => setSelectedTime(newValue)}
-//               ampm={false}
-//               slotProps={{
-//                 textField: {
-//                   fullWidth: true,
-//                   variant: "outlined",
-//                   className: styles.inputWindow, // Применяем стили, если нужно
-//                 },
-//               }}
-//             />
-//           </div>
-//         </div>
-//       </LocalizationProvider>
-//     </div>
-//   );
-// };
-
-// export default WindowDate;
-
-// import React, { FC, useState } from "react";
-// import DatePicker from "react-datepicker";
-
-// import { ru } from "date-fns/locale";
-// import "react-datepicker/dist/react-datepicker.css";
-// import styles from "./Additional.module.scss";
-
-// const WindowDate: FC = () => {
-//   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-//   const [selectedTime, setSelectedTime] = useState<string>(
-//     new Date().toLocaleTimeString().slice(0, 5)
-//   );
-
-//   const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setSelectedTime(event.target.value);
-//   };
-
-//   return (
-//     <div>
-//       <h3 className={styles.title}>Выбрать дату и время</h3>
-//       <div>
-//         <div className={styles.date}>
-//           <span className={styles.text}>Выберите дату</span>
-//           <div className={styles.datePicker}>
-//             <DatePicker
-//               selected={selectedDate}
-//               onChange={(date: Date) => setSelectedDate(date)}
-//               dateFormat="dd/MM/yyyy"
-//               locale={ru}
-//               className={styles.inputWindow}
-//               popperClassName={styles.popper}
-//               calendarClassName={styles.calendar}
-//               placeholderText="Дата"
-//             />
-//           </div>
-//         </div>
-//         <div className={styles.time}>
-//           <span className={styles.text}>Выберите время</span>
-//           <div className={styles.timePicker}>
-//             <input
-//               type="time"
-//               value={selectedTime}
-//               onChange={handleTimeChange}
-//               className={styles.inputWindow}
-//             />
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default WindowDate;

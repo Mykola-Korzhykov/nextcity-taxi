@@ -13,3 +13,14 @@
   background-color: $theme-color !important;
   color: #fff !important;
 }
+
+.react-datepicker__month-container {
+  width: 210px;
+}
+
+.react-datepicker__day-names,
+.react-datepicker__week {
+  display: flex;
+}
+
+// DesktopTimePicker
