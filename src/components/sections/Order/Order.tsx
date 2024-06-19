@@ -1,3 +1,4 @@
+// Order.tsx
 import React, { FC, useState } from "react";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 
@@ -6,9 +7,10 @@ import WindowDate from "./Additional/WindowDate";
 import WindowOptions from "./Additional/WindowOptions";
 
 import { IFormValues } from "interfaces/IField";
+import dayjs from "dayjs";
 import styles from "./Order.module.scss";
 
-enum Window {
+export enum Window {
   MAIN_FORM,
   WINDOW_DATE,
   WINDOW_OPTIONS,
@@ -24,6 +26,8 @@ const Order: FC = () => {
         { route: "", entrance: "" },
       ],
       tariff: "economy",
+      date: new Date(),
+      time: dayjs(),
     },
   });
 
@@ -37,7 +41,9 @@ const Order: FC = () => {
         {currentView === Window.MAIN_FORM && (
           <MainForm onSubmit={onSubmit} setCurrentView={setCurrentView} />
         )}
-        {currentView === Window.WINDOW_DATE && <WindowDate />}
+        {currentView === Window.WINDOW_DATE && (
+          <WindowDate setCurrentView={setCurrentView} />
+        )}
         {currentView === Window.WINDOW_OPTIONS && <WindowOptions />}
       </FormProvider>
     </div>
