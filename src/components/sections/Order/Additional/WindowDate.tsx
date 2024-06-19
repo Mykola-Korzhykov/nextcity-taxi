@@ -1,25 +1,25 @@
-import { FC, useState } from "react";
+import { FC } from "react";
+import { useFormContext, Controller } from "react-hook-form";
+
+import CallbackBtn from "@components/ui/CallbackBtn/CallbackBtn";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopTimePicker } from "@mui/x-date-pickers/DesktopTimePicker";
 import DatePicker from "react-datepicker";
 
+// import dayjs from "dayjs";
 import { ru } from "date-fns/locale";
-import dayjs, { Dayjs } from "dayjs";
-import "dayjs/locale/ru";
-import localizedFormat from "dayjs/plugin/localizedFormat";
+import { ruRU } from "@mui/x-date-pickers/locales";
 
+import { ICallbackBtn } from "interfaces/IAdditional";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./Additional.module.scss";
 
-import { ruRU } from "@mui/x-date-pickers/locales";
+// dayjs.extend(localizedFormat);
+// dayjs.locale("ru");
 
-dayjs.extend(localizedFormat);
-dayjs.locale("ru");
-
-const WindowDate: FC = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const [selectedTime, setSelectedTime] = useState<Dayjs | null>(dayjs());
+const WindowDate: FC<ICallbackBtn> = ({ setCurrentView }) => {
+  const { control } = useFormContext();
 
   return (
     <div>
@@ -34,91 +34,101 @@ const WindowDate: FC = () => {
         <div className={styles.date}>
           <span className={styles.text}>Выберите дату</span>
           <div className={styles.wrapperPicker}>
-            <DatePicker
-              selected={selectedDate}
-              onChange={(date: Date) => setSelectedDate(date)}
-              dateFormat="dd/MM/yyyy"
-              locale={ru}
-              className={styles.inputWindow}
+            <Controller
+              name="date"
+              control={control}
+              render={({ field }) => (
+                <DatePicker
+                  selected={field.value}
+                  onChange={(date: Date | null) => field.onChange(date)}
+                  dateFormat="dd/MM/yyyy"
+                  locale={ru}
+                  className={styles.inputWindow}
+                />
+              )}
             />
           </div>
         </div>
         <div className={styles.time}>
           <span className={styles.text}>Выберите время</span>
           <div className={styles.wrapperPicker}>
-            <DesktopTimePicker
-              value={selectedTime}
-              reduceAnimations={true}
-              onChange={(newValue) => setSelectedTime(newValue)}
-              ampm={false}
-              timeSteps={{ minutes: 1 }}
-              slotProps={{
-                textField: {
-                  fullWidth: true,
-                  variant: "outlined",
-                  sx: {
-                    "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
-                      border: "none !important",
-                      cursor: "pointer !important",
-                    },
-                    "& .MuiOutlinedInput-root": {
-                      border: "2px solid #ecedf0",
-                      borderRadius: "10px",
-                      cursor: "pointer !important",
-                      "&:hover, &.Mui-focused": {
-                        borderColor: "#f6110f",
-                      },
-                    },
-                    "& .MuiOutlinedInput-input": {
-                      padding: "12px 16px",
-                      color: "#333",
-                    },
-                  },
-                },
-                popper: {
-                  sx: {
-                    "& .MuiPaper-root": {
-                      width: "210px",
-                      boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
-                      borderRadius: "10px",
-                      "& .MuiPickersTimePickerToolbar-root": {
-                        backgroundColor: "#f6110f",
-                        color: "#fff",
-                      },
-                      "& .MuiList-root": {
-                        width: "50%",
-                        padding: "0 17px",
-                      },
-                      "& .MuiMultiSectionDigitalClock-root": {
-                        maxHeight: "180px",
-                      },
-                      "& .MuiButtonBase-root": {
-                        borderRadius: "35%",
-                        // backgroundColor: "#fff",
-                        // color: "#f6110f",
-                      },
-                      "& .css-1e3wlyl-MuiButtonBase-root-MuiMenuItem-root-MuiMultiSectionDigitalClockSection-item.Mui-selected":
-                        {
-                          backgroundColor: "#fff",
-                          color: "#f6110f",
-                          fontSize: "24px",
+            <Controller
+              name="time"
+              control={control}
+              render={({ field }) => (
+                <DesktopTimePicker
+                  value={field.value}
+                  onChange={(newValue) => field.onChange(newValue)}
+                  // className={styles.inputTimeWindow}
+                  ampm={false}
+                  timeSteps={{ minutes: 1 }}
+                  slotProps={{
+                    textField: {
+                      fullWidth: true,
+                      variant: "outlined",
+                      sx: {
+                        "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+                          border: "none !important",
                         },
-                      "& .css-knqc4i-MuiDialogActions-root": {
-                        justifyContent: "flex-start",
-                      },
-                      "& .css-1e6y48t-MuiButtonBase-root-MuiButton-root": {
-                        fontSize: "16px",
-                        fontWeight: "600 !important",
-                        color: "#f6110f",
+                        "& .MuiOutlinedInput-root": {
+                          border: "2px solid #ecedf0",
+                          borderRadius: "10px",
+                          cursor: "pointer !important",
+                          "&:hover, &.Mui-focused": {
+                            borderColor: "#f6110f",
+                          },
+                        },
+                        "& .MuiOutlinedInput-input": {
+                          padding: "12px 16px",
+                          color: "#333",
+                        },
                       },
                     },
-                  },
-                },
-              }}
+                    popper: {
+                      sx: {
+                        "& .MuiPaper-root": {
+                          width: "210px",
+                          boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+                          borderRadius: "10px",
+                          "& .MuiPickersTimePickerToolbar-root": {
+                            backgroundColor: "#f6110f !important",
+                            color: "#fff",
+                          },
+                          "& .MuiList-root": {
+                            width: "50%",
+                            padding: "0 17px",
+                          },
+                          "& .MuiMultiSectionDigitalClock-root": {
+                            maxHeight: "180px",
+                          },
+                          "& .MuiButtonBase-root": {
+                            borderRadius: "35%",
+                          },
+                          "& .css-1e3wlyl-MuiButtonBase-root-MuiMenuItem-root-MuiMultiSectionDigitalClockSection-item.Mui-selected":
+                            {
+                              backgroundColor: "#f6110f !important",
+                              color: "#fff",
+                              fontSize: "18px !important",
+                            },
+                          "& .css-knqc4i-MuiDialogActions-root": {
+                            justifyContent: "flex-end !important",
+                          },
+                          "& .css-1e6y48t-MuiButtonBase-root-MuiButton-root": {
+                            fontSize: "15px !important",
+                            fontWeight: "900 !important",
+                            color: "#f6110f !important",
+                          },
+                        },
+                      },
+                    },
+                  }}
+                />
+              )}
             />
           </div>
         </div>
       </LocalizationProvider>
+      <CallbackBtn setCurrentView={setCurrentView} />
     </div>
   );
 };

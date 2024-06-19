@@ -57,8 +57,9 @@
   width: 210px;
 }
 
-.inputWindow {
-  padding: 12px 16px;
+.inputWindow,
+.inputTimeWindow {
+  padding: 12px 16px !important;
   border: 2px solid $gray-5 !important;
   background-color: $white-1;
   border-radius: 10px;
@@ -73,18 +74,4 @@
   border-color: $theme-color !important;
 }
 
-// .inputWindow::placeholder {
-//   font-size: 16px;
-//   color: $gray-3;
-// }
-
-// .popper {
-//   border-radius: 40px;
-//   z-index: 15;
-// }
-
-// .calendar {
-//   border: 1px solid #ddd;
-//   border-radius: 40px;
-//   overflow: hidden;
-// }
+// DesktopTimePicker
