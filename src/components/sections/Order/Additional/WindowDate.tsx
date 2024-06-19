@@ -59,69 +59,77 @@ const WindowDate: FC<ICallbackBtn> = ({ setCurrentView }) => {
                 <DesktopTimePicker
                   value={field.value}
                   onChange={(newValue) => field.onChange(newValue)}
-                  // className={styles.inputTimeWindow}
+                  className={styles.inputTimeWindow}
                   ampm={false}
                   timeSteps={{ minutes: 1 }}
-                  slotProps={{
-                    textField: {
-                      fullWidth: true,
-                      variant: "outlined",
-                      sx: {
-                        "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
-                          border: "none !important",
-                        },
-                        "& .MuiOutlinedInput-root": {
-                          border: "2px solid #ecedf0",
-                          borderRadius: "10px",
-                          cursor: "pointer !important",
-                          "&:hover, &.Mui-focused": {
-                            borderColor: "#f6110f",
-                          },
-                        },
-                        "& .MuiOutlinedInput-input": {
-                          padding: "12px 16px",
-                          color: "#333",
-                        },
-                      },
-                    },
-                    popper: {
-                      sx: {
-                        "& .MuiPaper-root": {
-                          width: "210px",
-                          boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
-                          borderRadius: "10px",
-                          "& .MuiPickersTimePickerToolbar-root": {
-                            backgroundColor: "#f6110f !important",
-                            color: "#fff",
-                          },
-                          "& .MuiList-root": {
-                            width: "50%",
-                            padding: "0 17px",
-                          },
-                          "& .MuiMultiSectionDigitalClock-root": {
-                            maxHeight: "180px",
-                          },
-                          "& .MuiButtonBase-root": {
-                            borderRadius: "35%",
-                          },
-                          "& .css-1e3wlyl-MuiButtonBase-root-MuiMenuItem-root-MuiMultiSectionDigitalClockSection-item.Mui-selected":
-                            {
-                              backgroundColor: "#f6110f !important",
-                              color: "#fff",
-                              fontSize: "18px !important",
-                            },
-                          "& .css-knqc4i-MuiDialogActions-root": {
-                            justifyContent: "flex-end !important",
-                          },
-                          "& .css-1e6y48t-MuiButtonBase-root-MuiButton-root": {
-                            fontSize: "15px !important",
-                            fontWeight: "900 !important",
-                            color: "#f6110f !important",
-                          },
-                        },
-                      },
+                  sx={{
+                    "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+                      border: "2px solid #ecedf0 !important",
+                      borderRadius: "10px",
                     },
                   }}
+                  slotProps={
+                    {
+                      // textField: {
+                      //   fullWidth: true,
+                      //   variant: "outlined",
+                      //   sx: {
+                      //     "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+                      //       border: "none !important",
+                      //     },
+                      //     "& .MuiOutlinedInput-root": {
+                      //       border: "2px solid #ecedf0",
+                      //       borderRadius: "10px",
+                      //       cursor: "pointer !important",
+                      //       "&:hover, &.Mui-focused": {
+                      //         borderColor: "#f6110f",
+                      //       },
+                      //     },
+                      //     "& .MuiOutlinedInput-input": {
+                      //       padding: "12px 16px",
+                      //       color: "#333",
+                      //     },
+                      //   },
+                      // },
+                      // popper: {
+                      //   sx: {
+                      //     "& .MuiPaper-root": {
+                      //       width: "210px",
+                      //       boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+                      //       borderRadius: "10px",
+                      //       "& .MuiPickersTimePickerToolbar-root": {
+                      //         backgroundColor: "#f6110f !important",
+                      //         color: "#fff",
+                      //       },
+                      //       "& .MuiList-root": {
+                      //         width: "50%",
+                      //         padding: "0 17px",
+                      //       },
+                      //       "& .MuiMultiSectionDigitalClock-root": {
+                      //         maxHeight: "180px",
+                      //       },
+                      //       "& .MuiButtonBase-root": {
+                      //         borderRadius: "35%",
+                      //       },
+                      //       "& .css-1e3wlyl-MuiButtonBase-root-MuiMenuItem-root-MuiMultiSectionDigitalClockSection-item.Mui-selected":
+                      //         {
+                      //           backgroundColor: "#f6110f !important",
+                      //           color: "#fff",
+                      //           fontSize: "18px !important",
+                      //         },
+                      //       "& .css-knqc4i-MuiDialogActions-root": {
+                      //         justifyContent: "flex-end !important",
+                      //       },
+                      //       "& .css-1e6y48t-MuiButtonBase-root-MuiButton-root": {
+                      //         fontSize: "15px !important",
+                      //         fontWeight: "900 !important",
+                      //         color: "#f6110f !important",
+                      //       },
+                      //     },
+                      //   },
+                      // },
+                    }
+                  }
                 />
               )}
             />
