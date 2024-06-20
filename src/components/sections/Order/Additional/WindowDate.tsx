@@ -5,25 +5,22 @@ import CallbackBtn from "@components/ui/CallbackBtn/CallbackBtn";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopTimePicker } from "@mui/x-date-pickers/DesktopTimePicker";
-
 import DatePicker from "react-datepicker";
+import { ICallbackBtn } from "interfaces/IAdditional";
 
-// import dayjs from "dayjs";
+import { Popper } from "@mui/material";
 import { ru } from "date-fns/locale";
 import { ruRU } from "@mui/x-date-pickers/locales";
 
-import { ICallbackBtn } from "interfaces/IAdditional";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./Additional.module.scss";
-
-// dayjs.extend(localizedFormat);
-// dayjs.locale("ru");
 
 const WindowDate: FC<ICallbackBtn> = ({ setCurrentView }) => {
   const { control } = useFormContext();
 
   return (
     <div>
+      <h3 className={styles.title}>Выбрать дату и время</h3>
       <LocalizationProvider
         dateAdapter={AdapterDayjs}
         adapterLocale="ru"
@@ -62,6 +59,33 @@ const WindowDate: FC<ICallbackBtn> = ({ setCurrentView }) => {
                   onChange={(newValue) => field.onChange(newValue)}
                   ampm={false}
                   timeSteps={{ minutes: 1 }}
+                  slotProps={{
+                    popper: {
+                      sx: {
+                        "& .MuiPaper-root": {
+                          borderRadius: "10px !important",
+                        },
+                        "& .MuiList-root": {
+                          width: "105px !important",
+                          padding: "0 17px !important",
+                        },
+                        "& .MuiButtonBase-root": {
+                          borderRadius: "35%",
+                        },
+                        "& .css-1e3wlyl-MuiButtonBase-root-MuiMenuItem-root-MuiMultiSectionDigitalClockSection-item.Mui-selected":
+                          {
+                            backgroundColor: "#f6110f !important",
+                            color: "#fff !important",
+                            fontSize: "18px !important",
+                          },
+                        "& .css-1e6y48t-MuiButtonBase-root-MuiButton-root": {
+                          fontSize: "15px !important",
+                          fontWeight: "900 !important",
+                          color: "#f6110f !important",
+                        },
+                      },
+                    },
+                  }}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       border: "2px solid #ecedf0",
@@ -78,39 +102,6 @@ const WindowDate: FC<ICallbackBtn> = ({ setCurrentView }) => {
                       padding: "10px 16px",
                       color: "#333",
                     },
-                    // "& .MuiPickersPopper-root": {
-                    //   "& .MuiPaper-root": {
-                    //     width: "210px",
-                    //     boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
-                    //     borderRadius: "10px",
-                    //     "& .MuiPickersTimePickerToolbar-root": {
-                    //       backgroundColor: "#f6110f",
-                    //       color: "#fff",
-                    //     },
-                    //     "& .MuiList-root": {
-                    //       padding: "0 17px",
-                    //     },
-                    //     "& .MuiMultiSectionDigitalClock-root": {
-                    //       maxHeight: "180px",
-                    //     },
-                    //     "& .MuiButtonBase-root": {
-                    //       borderRadius: "35%",
-                    //     },
-                    //     "& .MuiMenuItem-root.Mui-selected": {
-                    //       backgroundColor: "#f6110f",
-                    //       color: "#fff",
-                    //       fontSize: "18px",
-                    //     },
-                    //     "& .MuiDialogActions-root": {
-                    //       justifyContent: "flex-end",
-                    //     },
-                    //     "& .MuiButton-root": {
-                    //       fontSize: "15px",
-                    //       fontWeight: "900",
-                    //       color: "#f6110f",
-                    //     },
-                    //   },
-                    // },
                   }}
                 />
               )}
@@ -118,7 +109,6 @@ const WindowDate: FC<ICallbackBtn> = ({ setCurrentView }) => {
           </div>
         </div>
       </LocalizationProvider>
-
       <CallbackBtn setCurrentView={setCurrentView} />
     </div>
   );
