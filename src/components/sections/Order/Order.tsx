@@ -1,5 +1,4 @@
-// Order.tsx
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 
 import MainForm from "./MainForm";

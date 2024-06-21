@@ -27,8 +27,9 @@
 // WindowDate and WindowOptions
 
 .title {
-  font-size: 26px;
+  font-size: 30px;
   font-weight: 700;
+  margin-bottom: 26px;
 }
 
 .text {
@@ -72,14 +73,3 @@
 .inputWindow:focus {
   border-color: $theme-color !important;
 }
-
-// DesktopTimePicker
-
-// .inputTimeWindow .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
-//   border: 2px solid #ff0000 !important; /* Красная граница */
-//   border-radius: 8px; /* Закругленные углы */
-// }
-
-// .inputTimeWindow {
-//   border: 2px solid $gray-5 !important;
-// }

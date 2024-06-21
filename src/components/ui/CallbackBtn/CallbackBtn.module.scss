@@ -1,2 +1,29 @@
 /* ---- CallbackBtn ---- */
 @import "@resources";
+
+.wrapperBtn {
+  position: relative;
+  width: 100%;
+  margin-top: 30px;
+  & button {
+    width: 100%;
+  }
+}
+
+.callbackIcon {
+  position: absolute;
+  padding: 13px;
+  background-color: #ce1e1e;
+  border-radius: 15px;
+  width: 47px;
+  height: 47px;
+  cursor: pointer;
+
+  & svg {
+    & path {
+      width: 20px;
+      height: 20px;
+      transition: fill 0.2s ease !important;
+    }
+  }
+}
