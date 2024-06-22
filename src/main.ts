@@ -1,3 +1,5 @@
+import * as basicAuth from 'express-basic-auth'
+
 import 'reflect-metadata'
 
 import { Req, ValidationPipe } from '@nestjs/common'
@@ -23,20 +25,24 @@ const bootstrap = async () => {
   app.setGlobalPrefix('api')
   app.useGlobalPipes(new ValidationPipe())
 
-  const config = new DocumentBuilder()
-    .setTitle('InterCity Taxi API')
-    .setDescription('API for InterCity Taxi')
-    .setVersion('1.0')
-    .build()
-  const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('/api/docs', app, document)
+  if (process.env.NODE_ENV === 'development') {
+    const config = new DocumentBuilder()
+      .setTitle('InterCity Taxi | API')
+      .setDescription(
+        'API for web application for intercity taxi in Rossoh, Russia.',
+      )
+      .setVersion('1.0')
+      .build()
+    const document = SwaggerModule.createDocument(app, config)
+    SwaggerModule.setup('/api/docs', app, document)
+  }
 
-  if (process.env.ENVIRONMENT === 'production') {
+  if (process.env.NODE_ENV === 'production') {
     app.enableCors(await getCorsConfig())
   }
 
   await app.register(fastifyCsrf)
-  await app.listen(process.env.PORT || 3000)
+  await app.listen(process.env.PORT || 5000)
 }
 
 bootstrap()

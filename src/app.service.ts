@@ -11,6 +11,6 @@ export class AppService {
   }
 
   async apply(data: ApplicationDto) {
-    return data.tariff
+    return data
   }
 }
