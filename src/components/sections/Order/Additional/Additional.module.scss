@@ -27,8 +27,8 @@
 // WindowDate and WindowOptions
 
 .title {
-  font-size: 30px;
-  font-weight: 700;
+  font-size: 29px;
+  font-weight: 800;
   margin-bottom: 26px;
 }
 
@@ -72,4 +72,25 @@
 .inputWindow:hover,
 .inputWindow:focus {
   border-color: $theme-color !important;
+}
+
+// WindowOption
+
+.option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 21px;
+  font-weight: 600;
+  margin-bottom: 26px;
+}
+
+.label {
+  font-size: 21px;
+  font-weight: 500;
+  margin-right: 5px;
+}
+
+.price {
+  color: $theme-color;
 }

@@ -3,10 +3,10 @@ import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 
 import MainForm from "./MainForm";
 import WindowDate from "./Additional/WindowDate";
-import WindowOptions from "./Additional/WindowOptions";
+import WindowOptions from "./Additional/WindowOption/WindowOptions";
 
-import { IFormValues } from "interfaces/IField";
 import dayjs from "dayjs";
+import { IFormValues } from "interfaces/IField";
 import styles from "./Order.module.scss";
 
 export enum Window {
@@ -27,6 +27,12 @@ const Order: FC = () => {
       tariff: "economy",
       date: new Date(),
       time: dayjs(),
+      options: [
+        { name: "child", value: false },
+        { name: "pets", value: false },
+        { name: "test1", value: false },
+        { name: "valera", value: true },
+      ],
     },
   });
 
@@ -43,7 +49,9 @@ const Order: FC = () => {
         {currentView === Window.WINDOW_DATE && (
           <WindowDate setCurrentView={setCurrentView} />
         )}
-        {currentView === Window.WINDOW_OPTIONS && <WindowOptions />}
+        {currentView === Window.WINDOW_OPTIONS && (
+          <WindowOptions setCurrentView={setCurrentView} />
+        )}
       </FormProvider>
     </div>
   );
