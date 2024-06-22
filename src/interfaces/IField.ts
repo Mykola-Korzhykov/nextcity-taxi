@@ -11,16 +11,12 @@ export type TDropArguments = {
   addedIndex: number;
 };
 
-// export interface IFormValues {
-//   fields: TField[];
-//   tariff: "economy" | "comfort" | "business" | "test";
-// }
-
 export interface IFormValues {
   fields: TField[];
   tariff: "economy" | "comfort" | "business" | "test";
   date: Date | null;
   time: Dayjs | null;
+  options: Array<{ name: string; value: boolean }>;
 }
 
 export interface IFieldActions {
