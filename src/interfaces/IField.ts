@@ -14,9 +14,11 @@ export type TDropArguments = {
 export interface IFormValues {
   fields: TField[];
   tariff: "economy" | "comfort" | "business" | "test";
+  phone: string | number;
   date: Date | null;
   time: Dayjs | null;
   options: Array<{ name: string; value: boolean }>;
+  status: "active" | "confirmed" | "cancelled";
 }
 
 export interface IFieldActions {

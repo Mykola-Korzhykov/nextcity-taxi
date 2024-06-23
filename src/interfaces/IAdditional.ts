@@ -2,6 +2,7 @@ export enum Window {
   MAIN_FORM,
   WINDOW_DATE,
   WINDOW_OPTIONS,
+  ORDER_STATUS,
 }
 
 export interface IAdditional {
@@ -15,4 +16,5 @@ export interface IMainForm {
 
 export interface ICallbackBtn {
   setCurrentView: (view: Window) => void;
+  buttonText?: string;
 }

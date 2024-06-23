@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { useFormContext } from "react-hook-form";
 
 import OrderList from "./OrderList";
+import PhoneField from "./PhoneField/PhoneField";
 import Tariff from "./Tariff/Tariff";
 import Additional from "./Additional/Additional";
 
@@ -15,6 +16,7 @@ const MainForm: FC<IMainForm> = ({ setCurrentView, onSubmit }) => {
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <h2 className={styles.title}>Новый заказ</h2>
       <OrderList />
+      <PhoneField />
       <Tariff />
       <Additional setCurrentView={setCurrentView} />
       <button type="submit" className={styles.submitButton}>
