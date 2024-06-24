@@ -1,7 +1,7 @@
 import { OnModuleInit } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 
-import { InjectBot, Start, Update } from 'nestjs-telegraf'
+import { Action, InjectBot, Start, Update } from 'nestjs-telegraf'
 
 import { Telegraf } from 'telegraf'
 
@@ -29,4 +29,7 @@ export class AppUpdate implements OnModuleInit {
 
     this.appService.startCommand(ctx)
   }
+
+  @Action('valera')
+  async valeraCallback(ctx: Context) {}
 }

@@ -4,7 +4,7 @@ import {
   ValidationArguments,
 } from 'class-validator'
 
-import { Field } from '../types/application.types'
+import { Field } from '../types/order.types'
 
 export function ContainsFields(validationOptions?: ValidationOptions) {
   return function (object: Object, propertyName: string) {

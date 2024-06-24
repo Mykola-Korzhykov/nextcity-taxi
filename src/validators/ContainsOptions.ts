@@ -3,7 +3,7 @@ import {
   ValidationOptions,
   ValidationArguments,
 } from 'class-validator'
-import { Option } from '../types/application.types'
+import { Option } from '../types/order.types'
 
 export function ContainsOptions(validationOptions?: ValidationOptions) {
   return function (object: Object, propertyName: string) {
