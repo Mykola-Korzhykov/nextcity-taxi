@@ -3,7 +3,7 @@ import { Dayjs } from "dayjs";
 export type TField = {
   route: string;
   entrance: string;
-  select: string;
+  select?: string;
 };
 
 export type TDropArguments = {
@@ -12,11 +12,17 @@ export type TDropArguments = {
 };
 
 export interface IFormValues {
+  orderId?: number;
   fields: TField[];
   tariff: "economy" | "comfort" | "business" | "test";
+  phone: string;
   date: Date | null;
   time: Dayjs | null;
   options: Array<{ name: string; value: boolean }>;
+  status?: "wait" | "confirmed" | "cancelled";
+  price: number;
+  car?: ICar;
+  driver?: IDriver;
 }
 
 export interface IFieldActions {
@@ -30,4 +36,15 @@ export interface IOrderFields extends IFieldActions {
 
 export interface IMemoizedFields extends IFieldActions {
   fields: TField[];
+}
+
+export interface IDriver {
+  name: string;
+  phone: string;
+}
+
+export interface ICar {
+  model: string;
+  color: string;
+  licensePlate: string;
 }

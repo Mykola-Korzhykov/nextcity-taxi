@@ -1,0 +1,17 @@
+/* ---- FhoneField ---- */
+@import "@resources";
+
+.phoneInput {
+  display: flex;
+  align-items: center;
+  background: $gray-1;
+  border: 2px solid $gray-1;
+  border-radius: 15px 15px 0 0;
+  width: 100%;
+  border-radius: 15px;
+}
+
+.hiddenLabel {
+  position: absolute;
+  left: -9999px;
+}

@@ -110,6 +110,16 @@ const WindowDate: FC<ICallbackBtn> = ({ setCurrentView }) => {
                           color: "#fff !important",
                           fontSize: "18px !important",
                         },
+                        "& .css-1ox9k5z.Mui-selected": {
+                          backgroundColor: "#f6110f !important",
+                          color: "#fff !important",
+                          fontSize: "18px !important",
+                        },
+                        "& .css-1ujsas3": {
+                          fontSize: "15px !important",
+                          fontWeight: "900 !important",
+                          color: "#f6110f !important",
+                        },
                       },
                     }}
                   />

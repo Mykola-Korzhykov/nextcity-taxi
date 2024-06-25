@@ -7,30 +7,30 @@ import { IFormValues } from "interfaces/IField";
 import "swiper/scss";
 import styles from "./Tariff.module.scss";
 
-const tariffs = [
+export const tariffs = [
   {
     label: "Эконом",
     value: "economy",
     component: <EconomyIcon />,
-    price: "От 115 ₽",
+    price: 115,
   },
   {
     label: "Комфорт",
     value: "comfort",
     component: <EconomyIcon />,
-    price: "От 125 ₽",
+    price: 125,
   },
   {
     label: "Бизнес",
     value: "business",
     component: <EconomyIcon />,
-    price: "От 150 ₽",
+    price: 150,
   },
   {
     label: "Тест",
     value: "test",
     component: <EconomyIcon />,
-    price: "От 160 ₽",
+    price: 160,
   },
 ];
 
@@ -60,7 +60,7 @@ const Tariff: FC = () => {
                   <div className={styles.tariffIcon}>{tariff.component}</div>
                   <label className={styles.label}>{tariff.label}</label>
                   <div className={styles.content}>
-                    <p>{tariff.price}</p>
+                    <p>{`От ${tariff.price} ₽`}</p>
                   </div>
                 </div>
               )}
