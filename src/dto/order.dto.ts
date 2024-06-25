@@ -24,16 +24,20 @@ import { ContainsFields } from '../validators/ContainsFields'
 import { ContainsOptions } from 'validators/ContainsOptions'
 import { ApiProperty } from '@nestjs/swagger'
 import { Dayjs } from 'dayjs'
+import { modelOptions, mongoose, prop } from '@typegoose/typegoose'
 
+@modelOptions({ schemaOptions: { timestamps: true } })
 export class OrderDto {
+  @prop({ unique: true })
   @IsOptional()
   @IsNumber()
   @ApiProperty({
     description: 'Unique ID for order',
     example: 563241,
   })
-  id: number
+  orderId: number
 
+  @prop({ type: mongoose.Schema.Types.Mixed })
   @IsArray()
   @ContainsFields()
   @ArrayMinSize(2)
@@ -51,6 +55,7 @@ export class OrderDto {
   })
   fields: Field[]
 
+  @prop()
   @IsEnum(Tariff)
   @ApiProperty({
     enum: Tariff,
@@ -59,6 +64,7 @@ export class OrderDto {
   })
   tariff: Tariff
 
+  @prop({ type: mongoose.Schema.Types.Mixed })
   @IsArray()
   @ArrayMaxSize(6)
   @ContainsOptions()
@@ -75,6 +81,7 @@ export class OrderDto {
   })
   options: Option[]
 
+  @prop()
   @IsNumber()
   @ApiProperty({
     description: 'Total price for this order',
@@ -82,6 +89,7 @@ export class OrderDto {
   })
   price: number
 
+  @prop()
   @IsString()
   @ApiProperty({
     description: 'Phone number of customer for this order',
@@ -89,6 +97,7 @@ export class OrderDto {
   })
   phone: string
 
+  @prop()
   @IsDate()
   @Type(() => Date)
   @ApiProperty({
@@ -97,14 +106,16 @@ export class OrderDto {
   })
   date: Date
 
-  @IsString()
-  @Type(() => Dayjs)
+  @prop()
+  @IsDate()
+  @Type(() => Date)
   @ApiProperty({
     description: 'Time for this order',
     example: '2024-06-24T19:39:52.379Z',
   })
-  time: () => Dayjs
+  time: Date
 
+  @prop()
   @IsEnum(Status)
   @ApiProperty({
     enum: Status,
@@ -113,6 +124,7 @@ export class OrderDto {
   })
   status: Status
 
+  @prop()
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => Driver)
@@ -126,6 +138,7 @@ export class OrderDto {
   })
   driver: Driver
 
+  @prop()
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => Car)

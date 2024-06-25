@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common'
-import { APP_GUARD } from '@nestjs/core'
 
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
@@ -11,6 +10,12 @@ import { TelegrafModule } from 'nestjs-telegraf'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 import getTelegrafConfig from './config/telegraf.config'
+import { Car, Driver, Field, Option } from 'types/order.types'
+import { OrderModule } from './order/order.module'
+import { OrderService } from 'order/order.service'
+import { TypegooseModule } from 'nestjs-typegoose'
+import { getMongoConfig } from 'config/mongo.config'
+import { OrderDto } from 'dto/order.dto'
 
 @Module({
   imports: [
@@ -20,17 +25,12 @@ import getTelegrafConfig from './config/telegraf.config'
       useFactory: getTelegrafConfig,
       inject: [ConfigService],
     }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.POSTGRES_HOST,
-      port: Number(process.env.POSTGRES_PORT),
-      username: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD,
-      entities: [],
-      database: process.env.POSTGRES_DB,
-      synchronize: true,
-      ssl: true,
+    TypegooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: getMongoConfig,
     }),
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppUpdate],

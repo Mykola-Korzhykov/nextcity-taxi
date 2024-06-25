@@ -9,6 +9,9 @@ import {
 } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 
+import { OrderDto } from 'dto/order.dto'
+import { prop } from '@typegoose/typegoose'
+
 export class Field {
   @IsString()
   @ApiProperty({ description: 'Address' })
@@ -35,24 +38,29 @@ export class Option {
 }
 
 export class Driver {
+  @prop()
   @IsString()
   @ApiProperty({ description: 'Name of driver for order' })
   name: string
 
+  @prop()
   @IsString()
   @ApiProperty({ description: 'Phone number of driver for order' })
   phone: string
 }
 
 export class Car {
+  @prop()
   @IsString()
   @ApiProperty({ description: 'Model of car for order' })
   model: string
 
+  @prop()
   @IsString()
   @ApiProperty({ description: 'Color of car for order' })
   color: string
 
+  @prop()
   @IsString()
   @ApiProperty({ description: 'License plate number of car for order' })
   licensePlate: string
