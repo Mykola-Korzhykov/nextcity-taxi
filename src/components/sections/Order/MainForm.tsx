@@ -10,7 +10,8 @@ import { IMainForm } from "interfaces/IAdditional";
 import styles from "./Order.module.scss";
 
 const MainForm: FC<IMainForm> = ({ setCurrentView, onSubmit }) => {
-  const { handleSubmit } = useFormContext();
+  const { handleSubmit, watch } = useFormContext();
+  const price = watch("price");
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -20,7 +21,7 @@ const MainForm: FC<IMainForm> = ({ setCurrentView, onSubmit }) => {
       <Tariff />
       <Additional setCurrentView={setCurrentView} />
       <button type="submit" className={styles.submitButton}>
-        Заказать
+        Заказать {price}
       </button>
     </form>
   );

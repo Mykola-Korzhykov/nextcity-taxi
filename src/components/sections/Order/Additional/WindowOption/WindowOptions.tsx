@@ -19,7 +19,7 @@ const WindowOptions: FC<ICallbackBtn> = ({ setCurrentView }) => {
           key={index}
           control={control}
           label={option.label}
-          price={option.price}
+          prices={option.price}
           name={`options[${index}].value`}
         />
       ))}

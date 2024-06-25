@@ -1,6 +1,6 @@
 export const OptionsData = [
-  { label: "Детское кресло", price: "250 ₽" },
-  { label: "Поездка с животными", price: "500 ₽" },
-  { label: "Детское кресло", price: "50 ₽" },
-  { label: "Поездка с Валерой", price: "150 ₽" },
+  { name: "child", label: "Детское кресло", price: 250 },
+  { name: "pets", label: "Поездка с животными", price: 500 },
+  { name: "test1", label: "Детское кресло", price: 50 },
+  { name: "valera", label: "Поездка с Валерой", price: 150 },
 ];
