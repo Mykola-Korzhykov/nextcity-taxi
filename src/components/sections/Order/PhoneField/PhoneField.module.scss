@@ -1,6 +1,10 @@
 /* ---- FhoneField ---- */
 @import "@resources";
 
+.phoneField {
+  position: relative;
+}
+
 .phoneInput {
   display: flex;
   align-items: center;
@@ -9,9 +13,21 @@
   border-radius: 15px 15px 0 0;
   width: 100%;
   border-radius: 15px;
+  &:hover {
+    border: 2px solid $theme-color;
+  }
 }
 
 .hiddenLabel {
   position: absolute;
   left: -9999px;
+}
+
+.phoneIcon {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }

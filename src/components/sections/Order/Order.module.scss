@@ -46,23 +46,31 @@
 
 .routeInput {
   padding-left: 13px;
-  width: 60%;
+  width: 68%;
   font-size: 18px;
+  font-weight: 600;
   height: 24px;
   overflow-y: hidden;
+  &::placeholder {
+    font-size: 18px;
+    font-weight: 400;
+  }
 }
 
 .entranceInput {
-  width: 70px;
+  width: 60px;
   text-align: center;
   border-radius: 5px;
   border-width: 1px;
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 800;
   padding: 4px;
   border: 1px solid $gray-3;
 
   &::placeholder {
     color: #999;
+    font-size: 11px;
+    font-weight: 400;
   }
   &::-webkit-input-placeholder {
     /* Chrome, Safari, Opera */

@@ -13,7 +13,7 @@ import WindowOptions from "./Additional/WindowOption/WindowOptions";
 import OrderStatus from "./OrderStatus/OrderStatus";
 
 import { OptionsData } from "./Additional/WindowOption/OptionsData";
-import { tariffs } from "./Tariff/Tariff";
+import { tariffs } from "./Tariff/tariffData";
 
 import { Window } from "interfaces/IAdditional";
 import { IFormValues } from "interfaces/IField";
@@ -73,10 +73,6 @@ const Order: FC = () => {
   useEffect(() => {
     const totalPrice = tariffPrice + optionPrice;
     setValue("price", totalPrice);
-
-    console.log("Tariff Price:", tariffPrice);
-    console.log("Option Price:", optionPrice);
-    console.log("Total Price:", totalPrice);
   }, [tariffPrice, optionPrice, setValue]);
 
   const [currentView, setCurrentView] = useState<Window>(Window.MAIN_FORM);

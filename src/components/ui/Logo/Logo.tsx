@@ -1,10 +1,13 @@
 import Link from "next/link";
+import LogoIcon from "@img/ui/Logo/Logo.svg";
+
+import styles from "./Logo.module.scss";
 
 const Logo = () => {
   return (
-    <Link href="/" className="styles.wrapper">
-      <h2 className="styles.title">intercity</h2>
-      <p className="styles.description">СЕРВИС ТАКСИ РФ</p>
+    <Link href="/" className={styles.logo}>
+      <LogoIcon />
+      {/* <p className="styles.description">СЕРВИС ТАКСИ РФ</p> */}
     </Link>
   );
 };

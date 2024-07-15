@@ -2,7 +2,7 @@
 import { FC } from "react";
 
 import Order from "../Order/Order";
-import Map from "../Map/Map";
+import Maps from "../Map/YandexMap";
 
 import styles from "./Offer.module.scss";
 
@@ -12,7 +12,7 @@ const Offer: FC = () => {
       <div className="container">
         <div className={styles.offer}>
           <Order />
-          <Map />
+          <Maps />
         </div>
       </div>
     </section>
