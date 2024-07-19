@@ -1,2 +1,37 @@
 /* ---- OrderStatus ---- */
 @import "@resources";
+
+.text {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.textWait {
+  margin-top: 18px;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.textGreen {
+  margin-bottom: 3px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #3aa429;
+}
+
+.textCancelled {
+  color: #ea1414;
+}
+
+.textOrderId {
+  font-size: 16px;
+  font-weight: 700;
+  color: #b0b0b0;
+}
+
+.textContent {
+  margin-top: 18px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #9390a2;
+}

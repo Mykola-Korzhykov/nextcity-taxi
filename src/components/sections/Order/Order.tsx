@@ -5,6 +5,7 @@ import {
   SubmitHandler,
   useWatch,
 } from "react-hook-form";
+import axios from "axios";
 import dayjs from "dayjs";
 
 import MainForm from "./MainForm";
@@ -19,7 +20,14 @@ import { Window } from "interfaces/IAdditional";
 import { IFormValues } from "interfaces/IField";
 import styles from "./Order.module.scss";
 
+// interface IOrderResponse {
+
+// }
+
 const Order: FC = () => {
+  const [currentView, setCurrentView] = useState<Window>(Window.MAIN_FORM);
+  const [orderData, setOrderData] = useState<any | null>(null);
+
   const form = useForm<IFormValues>({
     defaultValues: {
       fields: [
@@ -75,10 +83,37 @@ const Order: FC = () => {
     setValue("price", totalPrice);
   }, [tariffPrice, optionPrice, setValue]);
 
-  const [currentView, setCurrentView] = useState<Window>(Window.MAIN_FORM);
+  // Сформировать заказ
+  const sendOrderData = async (data: IFormValues) => {
+    try {
+      const response = await axios.post("/api/order", data, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      });
+      console.log("Order successfully sent:", response.data);
+      setOrderData(response.data);
+    } catch (error) {
+      console.error("Axios error message:", error);
+    }
+  };
+
+  const fetchOrderData = async () => {
+    try {
+      const response = await axios.get("/api/order", {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      });
+      console.log("Order data successfully fetched:", response.data);
+    } catch (error) {
+      console.error("Axios error message:", error);
+    }
+  };
 
   const onSubmit: SubmitHandler<IFormValues> = (data) => {
-    console.log(data);
+    fetchOrderData();
+    sendOrderData(data);
     setCurrentView(Window.ORDER_STATUS);
   };
 
@@ -95,7 +130,7 @@ const Order: FC = () => {
           <WindowOptions setCurrentView={setCurrentView} />
         )}
         {currentView === Window.ORDER_STATUS && (
-          <OrderStatus setCurrentView={setCurrentView} />
+          <OrderStatus setCurrentView={setCurrentView} orderData={orderData} />
         )}
       </FormProvider>
     </div>
