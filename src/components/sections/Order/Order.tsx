@@ -20,10 +20,6 @@ import { Window } from "interfaces/IAdditional";
 import { IFormValues } from "interfaces/IField";
 import styles from "./Order.module.scss";
 
-// interface IOrderResponse {
-
-// }
-
 const Order: FC = () => {
   const [currentView, setCurrentView] = useState<Window>(Window.MAIN_FORM);
   const [orderData, setOrderData] = useState<any | null>(null);
@@ -78,12 +74,47 @@ const Order: FC = () => {
     return selectedTariff ? selectedTariff.price : 0;
   }, [tariff]);
 
+  const addOrderToLocalStorage = (orderId: string) => {
+    const orders = JSON.parse(localStorage.getItem("Orders") || "[]");
+
+    if (!orders.includes(orderId)) {
+      orders.push(orderId);
+      localStorage.setItem("Orders", JSON.stringify(orders));
+    }
+  };
+
   useEffect(() => {
     const totalPrice = tariffPrice + optionPrice;
     setValue("price", totalPrice);
   }, [tariffPrice, optionPrice, setValue]);
 
-  // Сформировать заказ
+  useEffect(() => {
+    const fetchOrderData = async (orderId: string) => {
+      try {
+        const response = await axios.get(`/api/order/${orderId}`, {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+        });
+        console.log("Order data successfully fetched:", response.data);
+        if (response.data.status === "wait") {
+          setOrderData(response.data);
+          setCurrentView(Window.ORDER_STATUS);
+        }
+        console.log(response.data.status);
+      } catch (error) {
+        console.error("Error fetching order data:", error);
+      }
+    };
+
+    const orders = JSON.parse(localStorage.getItem("Orders") || "[]");
+    if (orders.length > 0) {
+      const lastOrderId = orders[orders.length - 1];
+      console.log("Последний orderId:", lastOrderId);
+      fetchOrderData(lastOrderId);
+    }
+  }, []);
+
   const sendOrderData = async (data: IFormValues) => {
     try {
       const response = await axios.post("/api/order", data, {
@@ -93,26 +124,13 @@ const Order: FC = () => {
       });
       console.log("Order successfully sent:", response.data);
       setOrderData(response.data);
-    } catch (error) {
-      console.error("Axios error message:", error);
-    }
-  };
-
-  const fetchOrderData = async () => {
-    try {
-      const response = await axios.get("/api/order", {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-      });
-      console.log("Order data successfully fetched:", response.data);
+      addOrderToLocalStorage(response.data.orderId);
     } catch (error) {
       console.error("Axios error message:", error);
     }
   };
 
   const onSubmit: SubmitHandler<IFormValues> = (data) => {
-    fetchOrderData();
     sendOrderData(data);
     setCurrentView(Window.ORDER_STATUS);
   };
