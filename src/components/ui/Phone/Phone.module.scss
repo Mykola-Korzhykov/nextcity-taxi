@@ -2,6 +2,35 @@
 @import "@resources";
 
 .phone {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  overflow: hidden;
   color: $theme-color;
   font-weight: 900;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0)
+    );
+    transition: left 0.5s;
+    animation: move-diagonal 2s linear infinite;
+  }
+}
+
+@keyframes move-diagonal {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
 }

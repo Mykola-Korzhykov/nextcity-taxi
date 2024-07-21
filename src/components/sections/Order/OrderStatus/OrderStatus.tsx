@@ -7,15 +7,26 @@ import { useFormContext } from "react-hook-form";
 import { ICar, IDriver } from "interfaces/IField";
 
 import styles from "./OrderStatus.module.scss";
+import { useAppDispatch } from "@store/hook";
+import { hideLoader, showLoader } from "@store/slices/loaderSlice";
 
 interface OrderStatusProps {
   setCurrentView: (view: Window) => void;
   orderData: any | null;
+  currentView?: any;
 }
 
-const OrderStatus: FC<OrderStatusProps> = ({ setCurrentView, orderData }) => {
+const OrderStatus: FC<OrderStatusProps> = ({
+  setCurrentView,
+  orderData,
+  currentView,
+}) => {
   const { getValues, reset, setValue } = useFormContext();
   const [status, setStatus] = useState(getValues("status"));
+
+  const dispatch = useAppDispatch();
+
+  const view = Window.ORDER_STATUS;
 
   const fetchOrderStatus = async () => {
     if (orderData && orderData.orderId) {
@@ -68,7 +79,13 @@ const OrderStatus: FC<OrderStatusProps> = ({ setCurrentView, orderData }) => {
         removeOrderFromLocalStorage(orderData.orderId);
         console.log(`Order ${orderData.orderId} successfully deleted.`);
       }
-      setCurrentView(Window.MAIN_FORM);
+
+      dispatch(showLoader());
+      setTimeout(() => {
+        setCurrentView(Window.MAIN_FORM);
+        dispatch(hideLoader());
+      }, 2000);
+
       reset();
     } catch (error) {
       console.error("Axios error message:", error);
@@ -87,7 +104,7 @@ const OrderStatus: FC<OrderStatusProps> = ({ setCurrentView, orderData }) => {
   };
 
   return (
-    <div>
+    <div className={`view ${view === currentView ? "viewActive" : ""}`}>
       {status === "wait" && (
         <>
           <h3 className={styles.textGreen}>Ваш заказ успешно отправлен!</h3>

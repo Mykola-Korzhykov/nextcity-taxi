@@ -4,11 +4,13 @@ import OrderList from "./OrderList";
 import PhoneField from "./PhoneField/PhoneField";
 import Tariff from "./Tariff/Tariff";
 import Additional from "./Additional/Additional";
-import { IMainForm } from "interfaces/IAdditional";
+import { IMainForm, Window } from "interfaces/IAdditional";
 import styles from "./Order.module.scss";
 import Swal from "sweetalert2";
 
-const MainForm: FC<IMainForm> = ({ setCurrentView, onSubmit }) => {
+const MainForm: FC<IMainForm> = ({ setCurrentView, onSubmit, currentView }) => {
+  const view = Window.MAIN_FORM;
+
   const {
     handleSubmit,
     watch,
@@ -39,7 +41,9 @@ const MainForm: FC<IMainForm> = ({ setCurrentView, onSubmit }) => {
 
   return (
     <form
-      className={styles.form}
+      className={`view ${styles.form} ${
+        view === currentView ? "viewActive" : ""
+      }`}
       onSubmit={handleSubmit(onSubmitWithValidation)}
     >
       <h2 className={styles.title}>Новый заказ</h2>
@@ -47,8 +51,8 @@ const MainForm: FC<IMainForm> = ({ setCurrentView, onSubmit }) => {
       <PhoneField />
       <Tariff />
       <Additional setCurrentView={setCurrentView} />
-      <button type="submit" className={styles.submitButton}>
-        Заказать {price}
+      <button type="submit" className={`themeButton ${styles.submitButton}`}>
+        Заказать <span>{price} ₽</span>
       </button>
     </form>
   );

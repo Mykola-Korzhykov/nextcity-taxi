@@ -19,6 +19,8 @@ import { tariffs } from "./Tariff/tariffData";
 import { Window } from "interfaces/IAdditional";
 import { IFormValues } from "interfaces/IField";
 import styles from "./Order.module.scss";
+import { hideLoader, showLoader } from "@store/slices/loaderSlice";
+import { useAppDispatch } from "@store/hook";
 
 const Order: FC = () => {
   const [currentView, setCurrentView] = useState<Window>(Window.MAIN_FORM);
@@ -46,6 +48,8 @@ const Order: FC = () => {
   });
 
   const { setValue, control } = form;
+
+  const dispatch = useAppDispatch();
 
   const options = useWatch({
     control,
@@ -132,13 +136,18 @@ const Order: FC = () => {
 
   const onSubmit: SubmitHandler<IFormValues> = (data) => {
     sendOrderData(data);
-    setCurrentView(Window.ORDER_STATUS);
+
+    dispatch(showLoader());
+    setTimeout(() => {
+      setCurrentView(Window.ORDER_STATUS);
+      dispatch(hideLoader());
+    }, 2000);
   };
 
   return (
     <div className={styles.wrapper}>
       <FormProvider {...form}>
-        {currentView === Window.MAIN_FORM && (
+        {/* {currentView === Window.MAIN_FORM && (
           <MainForm onSubmit={onSubmit} setCurrentView={setCurrentView} />
         )}
         {currentView === Window.WINDOW_DATE && (
@@ -149,7 +158,28 @@ const Order: FC = () => {
         )}
         {currentView === Window.ORDER_STATUS && (
           <OrderStatus setCurrentView={setCurrentView} orderData={orderData} />
-        )}
+        )} */}
+
+        <div className={styles.viewWrapper}>
+          <MainForm
+            onSubmit={onSubmit}
+            setCurrentView={setCurrentView}
+            currentView={currentView}
+          />
+          <WindowDate
+            setCurrentView={setCurrentView}
+            currentView={currentView}
+          />
+          <WindowOptions
+            setCurrentView={setCurrentView}
+            currentView={currentView}
+          />
+          <OrderStatus
+            setCurrentView={setCurrentView}
+            currentView={currentView}
+            orderData={orderData}
+          />
+        </div>
       </FormProvider>
     </div>
   );

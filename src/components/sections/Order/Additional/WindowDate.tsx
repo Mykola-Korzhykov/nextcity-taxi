@@ -12,15 +12,17 @@ import { ru } from "date-fns/locale";
 import { ruRU } from "@mui/x-date-pickers/locales";
 
 import { StyledEngineProvider } from "@mui/material/styles";
-import { ICallbackBtn } from "interfaces/IAdditional";
+import { ICallbackBtn, Window } from "interfaces/IAdditional";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./Additional.module.scss";
 
-const WindowDate: FC<ICallbackBtn> = ({ setCurrentView }) => {
+const WindowDate: FC<ICallbackBtn> = ({ setCurrentView, currentView }) => {
   const { control } = useFormContext();
 
+  const view = Window.WINDOW_DATE;
+
   return (
-    <div>
+    <div className={`view ${view === currentView ? "viewActive" : ""}`}>
       <StyledEngineProvider injectFirst>
         <h3 className={styles.title}>Выбрать дату и время</h3>
         <LocalizationProvider

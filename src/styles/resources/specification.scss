@@ -3,6 +3,8 @@
   box-sizing: border-box;
   outline: none;
   border: none;
+  margin: 0;
+  padding: 0px;
   scroll-margin-top: $scroll-margin-top;
 
   @include mq($phablet) {
@@ -10,8 +12,12 @@
   }
 }
 
+body,
+html {
+  height: 100%;
+}
+
 body {
-  height: 2000px;
   @include reset-indents();
   background: $background-color;
   @include font-size($font-size);
@@ -153,12 +159,83 @@ button {
   // }
 }
 
+.view {
+  @include transition();
+  opacity: 0;
+  position: absolute;
+  transform: translateX(-100px);
+  pointer-events: none;
+  visibility: hidden;
+  width: 450px;
+}
+
+.viewActive {
+  @include transition();
+  opacity: 1;
+  position: relative;
+  transform: translate(0);
+  pointer-events: visible;
+  visibility: visible;
+}
+
+.themeButton {
+  display: inline-block;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: none;
+  z-index: 1;
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $theme-color;
+    z-index: -2;
+  }
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: darken($theme-color, 5%);
+    transition: all 0.3s;
+    z-index: -1;
+  }
+  &:hover {
+    color: #fff;
+    &:before {
+      width: 100%;
+    }
+  }
+}
+
 input {
+  transition: border 0.3s ease;
   padding: 13px;
   background: $gray-1;
 
   &::placeholder {
     color: $gray-2;
+  }
+
+  &:focus {
+    transition: border 0.3s ease;
+    border-color: $theme-color;
+  }
+}
+
+textarea {
+  transition: border 0.3s ease;
+
+  &:focus {
+    transition: border 0.3s ease;
+    border-color: $theme-color;
   }
 }
 
@@ -190,6 +267,13 @@ input::-webkit-inner-spin-button {
 
 ::-moz-selection {
   @include selection();
+}
+
+.next-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  flex-grow: 1;
 }
 
 .container {
