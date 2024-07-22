@@ -23,10 +23,14 @@ const OrderStatus: FC<OrderStatusProps> = ({
 }) => {
   const { getValues, reset, setValue } = useFormContext();
   const [status, setStatus] = useState(getValues("status"));
+  const [orderInterval, setOrderInterval] = useState<NodeJS.Timeout | null>(
+    null
+  );
 
   const dispatch = useAppDispatch();
 
   const view = Window.ORDER_STATUS;
+  // let intervalId: NodeJS.Timeout | null = null;
 
   const fetchOrderStatus = async () => {
     if (orderData && orderData.orderId) {
@@ -49,11 +53,10 @@ const OrderStatus: FC<OrderStatusProps> = ({
   };
 
   useEffect(() => {
-    let intervalId: NodeJS.Timeout | null = null;
-
     if (status === "wait" && orderData && orderData.orderId) {
       fetchOrderStatus();
-      intervalId = setInterval(fetchOrderStatus, 8000);
+      // intervalId = setInterval(fetchOrderStatus, 8000);
+      setOrderInterval(setInterval(fetchOrderStatus, 8000));
     }
 
     // return () => {
@@ -61,30 +64,67 @@ const OrderStatus: FC<OrderStatusProps> = ({
     // };
   }, [orderData, status, setValue]);
 
+  useEffect(() => {
+    if (currentView !== view) {
+      clearInterval(orderInterval);
+    }
+  }, [currentView]);
+
   const removeOrderFromLocalStorage = (orderId: string) => {
     let orders = JSON.parse(localStorage.getItem("Orders") || "[]");
     orders = orders.filter((id: string) => id !== orderId);
     localStorage.setItem("Orders", JSON.stringify(orders));
   };
 
+  // const handleCancelOrder = async () => {
+  //   console.log(orderData.orderId);
+  //   try {
+  //     if (orderData && orderData.orderId) {
+  //       await axios.delete(`api/order/${orderData.orderId}`, {
+  //         headers: {
+  //           "Content-Type": "application/json; charset=utf-8",
+  //         },
+  //       });
+  //       removeOrderFromLocalStorage(orderData.orderId);
+  //       console.log(`Order ${orderData.orderId} successfully deleted.`);
+  //     }
+
+  //     dispatch(showLoader());
+  //     setTimeout(() => {
+  //       setCurrentView(Window.MAIN_FORM);
+  //       dispatch(hideLoader());
+  //     }, 2000);
+
+  //     reset();
+  //   } catch (error) {
+  //     console.error("Axios error message:", error);
+  //   }
+  // };
+
   const handleCancelOrder = async () => {
     console.log(orderData.orderId);
     try {
       if (orderData && orderData.orderId) {
-        await axios.delete(`api/order/${orderData.orderId}`, {
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
+        await axios.patch(
+          "api/order",
+          {
+            orderId: orderData.orderId,
+            status: "cancelled",
           },
-        });
+          {
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+            },
+          }
+        );
         removeOrderFromLocalStorage(orderData.orderId);
-        console.log(`Order ${orderData.orderId} successfully deleted.`);
+        console.log(`Order ${orderData.orderId} successfully cancelled.`);
       }
-
       dispatch(showLoader());
       setTimeout(() => {
         setCurrentView(Window.MAIN_FORM);
         dispatch(hideLoader());
-      }, 2000);
+      }, 1500);
 
       reset();
     } catch (error) {
