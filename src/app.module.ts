@@ -30,6 +30,14 @@ import { OrderDto } from 'dto/order.dto'
       inject: [ConfigService],
       useFactory: getMongoConfig,
     }),
+    TypegooseModule.forFeature([
+      {
+        typegooseClass: OrderDto,
+        schemaOptions: {
+          collection: 'Order',
+        },
+      },
+    ]),
     OrderModule,
   ],
   controllers: [AppController],

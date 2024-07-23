@@ -39,29 +39,24 @@ export class Option {
 
 export class Driver {
   @prop()
-  @IsString()
   @ApiProperty({ description: 'Name of driver for order' })
   name: string
 
   @prop()
-  @IsString()
   @ApiProperty({ description: 'Phone number of driver for order' })
   phone: string
 }
 
 export class Car {
   @prop()
-  @IsString()
   @ApiProperty({ description: 'Model of car for order' })
   model: string
 
   @prop()
-  @IsString()
   @ApiProperty({ description: 'Color of car for order' })
   color: string
 
   @prop()
-  @IsString()
   @ApiProperty({ description: 'License plate number of car for order' })
   licensePlate: string
 }
@@ -77,4 +72,9 @@ export enum Status {
   WAIT = 'wait',
   CONFIRMED = 'confirmed',
   CANCELLED = 'cancelled',
+  FINISHED = 'finished',
+}
+
+export const isValidTariff = (value: string): value is Tariff => {
+  return Object.values(Tariff).includes(value as Tariff)
 }

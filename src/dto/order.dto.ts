@@ -37,6 +37,8 @@ export class OrderDto {
   })
   orderId: number
 
+  createdAt?: Date
+
   @prop({ type: mongoose.Schema.Types.Mixed })
   @IsArray()
   @ContainsFields()
