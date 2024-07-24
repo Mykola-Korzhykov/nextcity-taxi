@@ -7,20 +7,20 @@ import {
 } from "react-hook-form";
 import axios from "axios";
 import dayjs from "dayjs";
+import { useAppDispatch } from "@store/hook";
 
 import MainForm from "./MainForm";
 import WindowDate from "./Additional/WindowDate";
 import WindowOptions from "./Additional/WindowOption/WindowOptions";
 import OrderStatus from "./OrderStatus/OrderStatus";
 
+import { hideLoader, showLoader } from "@store/slices/loaderSlice";
 import { OptionsData } from "./Additional/WindowOption/OptionsData";
 import { tariffs } from "./Tariff/tariffData";
 
 import { Window } from "interfaces/IAdditional";
 import { IFormValues } from "interfaces/IField";
 import styles from "./Order.module.scss";
-import { hideLoader, showLoader } from "@store/slices/loaderSlice";
-import { useAppDispatch } from "@store/hook";
 
 const Order: FC = () => {
   const [currentView, setCurrentView] = useState<Window>(Window.MAIN_FORM);
@@ -37,8 +37,8 @@ const Order: FC = () => {
       date: new Date(),
       time: dayjs(),
       options: [
-        { name: "child", value: false },
-        { name: "pets", value: false },
+        { name: "Детское кресло", value: false },
+        { name: "Поездка с животными", value: false },
         { name: "test1", value: false },
         { name: "valera", value: false },
       ],
@@ -78,7 +78,7 @@ const Order: FC = () => {
     return selectedTariff ? selectedTariff.price : 0;
   }, [tariff]);
 
-  const addOrderToLocalStorage = (orderId: string) => {
+  const addOrderToLocalStorage = (orderId: number) => {
     const orders = JSON.parse(localStorage.getItem("Orders") || "[]");
 
     if (!orders.includes(orderId)) {
@@ -101,7 +101,10 @@ const Order: FC = () => {
           },
         });
         console.log("Order data successfully fetched:", response.data);
-        if (response.data.status === "wait") {
+        if (
+          response.data.status !== "cancelled" ||
+          response.data.status !== "finished"
+        ) {
           setOrderData(response.data);
           setCurrentView(Window.ORDER_STATUS);
         }

@@ -1,51 +1,46 @@
-import axios from "axios";
 import { FC, useEffect, useState } from "react";
-import CallbackBtn from "@components/ui/CallbackBtn/CallbackBtn";
-
-import { Window } from "interfaces/IAdditional";
-import { useFormContext } from "react-hook-form";
-import { ICar, IDriver } from "interfaces/IField";
-
-import styles from "./OrderStatus.module.scss";
 import { useAppDispatch } from "@store/hook";
+import axios from "axios";
+import { useFormContext } from "react-hook-form";
+
+import { HeadStatus } from "@components/ui/HeadStatus/HeadStatus";
+import { PhoneIcon } from "@components/ui/PhoneIcon/PhoneIcon";
+import { Window } from "interfaces/IAdditional";
+import CallbackBtn from "@components/ui/CallbackBtn/CallbackBtn";
 import { hideLoader, showLoader } from "@store/slices/loaderSlice";
 
-interface OrderStatusProps {
+import { IFormValues } from "interfaces/IField";
+import styles from "./OrderStatus.module.scss";
+
+interface IOrderStatus {
   setCurrentView: (view: Window) => void;
-  orderData: any | null;
+  orderData: IFormValues | null;
   currentView?: any;
 }
 
-const OrderStatus: FC<OrderStatusProps> = ({
+const OrderStatus: FC<IOrderStatus> = ({
   setCurrentView,
   orderData,
   currentView,
 }) => {
-  const { getValues, reset, setValue } = useFormContext();
-  const [status, setStatus] = useState(getValues("status"));
+  const { reset } = useFormContext();
+  const [currentOrder, setCurrentOrder] = useState<IFormValues | null>(
+    orderData
+  );
   const [orderInterval, setOrderInterval] = useState<NodeJS.Timeout | null>(
     null
   );
 
   const dispatch = useAppDispatch();
-
   const view = Window.ORDER_STATUS;
-  // let intervalId: NodeJS.Timeout | null = null;
 
   const fetchOrderStatus = async () => {
-    if (orderData && orderData.orderId) {
+    if (orderData && orderData.status !== "cancelled") {
       try {
         const response = await axios.get(`api/order/${orderData.orderId}`);
         console.log("Server response:", response.data);
 
-        const fetchedStatus = response.data.status;
-        console.log(status);
-        console.log(fetchedStatus);
-        console.log(response.data);
-
-        if (fetchedStatus !== "wait") {
-          setStatus(fetchedStatus);
-        }
+        setCurrentOrder(response.data);
       } catch (error) {
         console.error("Axios error message:", error);
       }
@@ -53,56 +48,45 @@ const OrderStatus: FC<OrderStatusProps> = ({
   };
 
   useEffect(() => {
-    if (status === "wait" && orderData && orderData.orderId) {
+    if (orderData && orderData.orderId) {
       fetchOrderStatus();
-      // intervalId = setInterval(fetchOrderStatus, 8000);
       setOrderInterval(setInterval(fetchOrderStatus, 8000));
     }
-
-    // return () => {
-    //   if (intervalId) clearInterval(intervalId);
-    // };
-  }, [orderData, status, setValue]);
+    return () => {
+      if (orderInterval) {
+        clearInterval(orderInterval);
+      }
+    };
+  }, [orderData]);
 
   useEffect(() => {
-    if (currentView !== view) {
+    if (currentView !== view && orderInterval) {
       clearInterval(orderInterval);
     }
   }, [currentView]);
 
-  const removeOrderFromLocalStorage = (orderId: string) => {
-    let orders = JSON.parse(localStorage.getItem("Orders") || "[]");
-    orders = orders.filter((id: string) => id !== orderId);
-    localStorage.setItem("Orders", JSON.stringify(orders));
+  useEffect(() => {
+    setCurrentOrder(orderData);
+    console.log(orderData);
+    console.log(currentOrder);
+  }, [orderData]);
+
+  const removeOrder = (orderId: number) => {
+    let orders = JSON.parse(localStorage.getItem("Orders"));
+    if (!orders) {
+      return false;
+    }
+
+    const index = orders.indexOf(orderId);
+
+    if (index !== -1) {
+      orders.splice(index, 1);
+      localStorage.setItem("Orders", JSON.stringify(orders));
+    }
   };
 
-  // const handleCancelOrder = async () => {
-  //   console.log(orderData.orderId);
-  //   try {
-  //     if (orderData && orderData.orderId) {
-  //       await axios.delete(`api/order/${orderData.orderId}`, {
-  //         headers: {
-  //           "Content-Type": "application/json; charset=utf-8",
-  //         },
-  //       });
-  //       removeOrderFromLocalStorage(orderData.orderId);
-  //       console.log(`Order ${orderData.orderId} successfully deleted.`);
-  //     }
-
-  //     dispatch(showLoader());
-  //     setTimeout(() => {
-  //       setCurrentView(Window.MAIN_FORM);
-  //       dispatch(hideLoader());
-  //     }, 2000);
-
-  //     reset();
-  //   } catch (error) {
-  //     console.error("Axios error message:", error);
-  //   }
-  // };
-
   const handleCancelOrder = async () => {
-    console.log(orderData.orderId);
+    console.log(orderData?.orderId);
     try {
       if (orderData && orderData.orderId) {
         await axios.patch(
@@ -117,7 +101,7 @@ const OrderStatus: FC<OrderStatusProps> = ({
             },
           }
         );
-        removeOrderFromLocalStorage(orderData.orderId);
+        removeOrder(orderData.orderId);
         console.log(`Order ${orderData.orderId} successfully cancelled.`);
       }
       dispatch(showLoader());
@@ -132,63 +116,75 @@ const OrderStatus: FC<OrderStatusProps> = ({
     }
   };
 
-  const Driver: IDriver = {
-    name: "Алексей",
-    phone: "4758923564",
-  };
-
-  const Car: ICar = {
-    model: "",
-    color: "",
-    licensePlate: "",
+  const handleNewOrder = () => {
+    removeOrder(currentOrder.orderId);
+    reset();
+    setCurrentView(Window.MAIN_FORM);
   };
 
   return (
     <div className={`view ${view === currentView ? "viewActive" : ""}`}>
-      {status === "wait" && (
+      <HeadStatus status={currentOrder?.status} />
+      {currentOrder?.status === "wait" && (
         <>
-          <h3 className={styles.textGreen}>Ваш заказ успешно отправлен!</h3>
-          <span className={styles.textOrderId}>
-            # {orderData ? orderData.orderId : null}
-          </span>
-          <h3 className={styles.textWait}>
-            В течение 5-7 минут ожидайте подтверждения заказа.
+          <span className={styles.textOrderId}># {currentOrder.orderId}</span>
+          <h3 className={styles.textContent}>
+            Ожидайте подтверждения оператора в течение 5 - 10 минут.
           </h3>
+          <div className={styles.orderInfo}>
+            <PhoneIcon />
+          </div>
         </>
       )}
-      {status === "confirmed" && (
+      {currentOrder?.status === "confirmed" && (
         <>
-          <h3 className={styles.text}>
-            Заказ <span className={styles.textGreen}>подтвержден!</span>{" "}
-          </h3>
-          <span className={styles.textOrderId}>
-            # {orderData ? orderData.orderId : null}
-          </span>
-          <p>{orderData.driver ? orderData.driver.name : Driver.name}</p>
-          {/* <p>{orderData.driver.name}</p> */}
+          <span className={styles.textOrderId}># {currentOrder.orderId}</span>
+          <div className={styles.orderInfo}>
+            <div className={styles.orderContent}>
+              <p className={styles.contactName}>{currentOrder.driver?.name}</p>
+              <p className={styles.carInfo}>{currentOrder.car?.model}</p>
+              <p className={styles.carInfo}>{currentOrder.car?.color}</p>
+              <p className={styles.carInfo}>{currentOrder.car?.licensePlate}</p>
+            </div>
+            <div>
+              <PhoneIcon phone={currentOrder.driver?.phone} />
+            </div>
+          </div>
+          <div className={styles.price}>
+            <span>{currentOrder.price} ₽</span>
+            <span>{currentOrder.tariff}</span>
+          </div>
         </>
       )}
-      {status === "cancelled" && (
+      {currentOrder?.status === "cancelled" && (
         <>
-          <h3 className={styles.text}>
-            Заказ <span className={styles.textCancelled}>отменен!</span>
-          </h3>
-          <span className={styles.textOrderId}>
-            # {orderData ? orderData.orderId : null}
-          </span>
+          <span className={styles.textOrderId}># {currentOrder.orderId}</span>
           <p className={styles.textContent}>
             Извините, на данный момент нет свободных машин, попробуйте заказать
             снова.
           </p>
+          <PhoneIcon />
         </>
       )}
-      {status === "wait" || status === "confirmed" ? (
+      {currentOrder?.status === "finished" && (
+        <>
+          <span className={styles.textOrderId}># {currentOrder.orderId}</span>
+          <h3 className={styles.textContent}>
+            Спасибо! Ждем от вас новых заказов!
+          </h3>
+          <div className={styles.orderInfo}>
+            <PhoneIcon />
+          </div>
+        </>
+      )}
+      {currentOrder?.status === "wait" ||
+      currentOrder?.status === "confirmed" ? (
         <CallbackBtn
-          setCurrentView={() => handleCancelOrder()}
+          setCurrentView={handleCancelOrder}
           buttonText="Отменить заказ"
         />
       ) : (
-        <CallbackBtn setCurrentView={setCurrentView} buttonText="Новый заказ" />
+        <CallbackBtn setCurrentView={handleNewOrder} buttonText="Новый заказ" />
       )}
     </div>
   );

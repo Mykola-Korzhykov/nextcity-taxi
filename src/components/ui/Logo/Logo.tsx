@@ -7,7 +7,6 @@ const Logo = () => {
   return (
     <Link href="/" className={styles.logo}>
       <LogoIcon />
-      {/* <p className="styles.description">СЕРВИС ТАКСИ РФ</p> */}
     </Link>
   );
 };
