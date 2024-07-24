@@ -1,2 +1,48 @@
 /* ---- OrderStatus ---- */
 @import "@resources";
+
+.orderInfo {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.textOrderId {
+  font-size: 16px;
+  font-weight: 700;
+  color: #b0b0b0;
+}
+
+.text {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.textContent {
+  margin-top: 18px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #9390a2;
+}
+
+.contactName {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.carInfo {
+  font-size: 16px;
+  font-weight: 900;
+  color: #9390a2;
+}
+
+.price {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight: 600;
+  color: $theme-color;
+}

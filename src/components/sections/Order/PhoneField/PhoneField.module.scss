@@ -6,6 +6,7 @@
 }
 
 .phoneInput {
+  @include transition();
   display: flex;
   align-items: center;
   background: $gray-1;
@@ -14,6 +15,7 @@
   width: 100%;
   border-radius: 15px;
   &:hover {
+    @include transition();
     border: 2px solid $theme-color;
   }
 }

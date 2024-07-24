@@ -9,11 +9,14 @@ const CallbackBtn: FC<ICallbackBtn> = ({
   buttonText = "Сохранить",
 }) => {
   return (
-    <div className={styles.wrapperBtn}>
+    <div className={`${styles.wrapperBtn}`}>
       <div className={styles.callbackIcon}>
         <CallbackIcon />
       </div>
-      <button onClick={() => setCurrentView(Window.MAIN_FORM)}>
+      <button
+        onClick={() => setCurrentView(Window.MAIN_FORM)}
+        className="themeButton"
+      >
         {buttonText}
       </button>
     </div>

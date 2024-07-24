@@ -5,13 +5,16 @@ import {
   SubmitHandler,
   useWatch,
 } from "react-hook-form";
+import axios from "axios";
 import dayjs from "dayjs";
+import { useAppDispatch } from "@store/hook";
 
 import MainForm from "./MainForm";
 import WindowDate from "./Additional/WindowDate";
 import WindowOptions from "./Additional/WindowOption/WindowOptions";
 import OrderStatus from "./OrderStatus/OrderStatus";
 
+import { hideLoader, showLoader } from "@store/slices/loaderSlice";
 import { OptionsData } from "./Additional/WindowOption/OptionsData";
 import { tariffs } from "./Tariff/tariffData";
 
@@ -20,6 +23,9 @@ import { IFormValues } from "interfaces/IField";
 import styles from "./Order.module.scss";
 
 const Order: FC = () => {
+  const [currentView, setCurrentView] = useState<Window>(Window.MAIN_FORM);
+  const [orderData, setOrderData] = useState<any | null>(null);
+
   const form = useForm<IFormValues>({
     defaultValues: {
       fields: [
@@ -31,8 +37,8 @@ const Order: FC = () => {
       date: new Date(),
       time: dayjs(),
       options: [
-        { name: "child", value: false },
-        { name: "pets", value: false },
+        { name: "Детское кресло", value: false },
+        { name: "Поездка с животными", value: false },
         { name: "test1", value: false },
         { name: "valera", value: false },
       ],
@@ -42,6 +48,8 @@ const Order: FC = () => {
   });
 
   const { setValue, control } = form;
+
+  const dispatch = useAppDispatch();
 
   const options = useWatch({
     control,
@@ -70,22 +78,85 @@ const Order: FC = () => {
     return selectedTariff ? selectedTariff.price : 0;
   }, [tariff]);
 
+  const addOrderToLocalStorage = (orderId: number) => {
+    const orders = JSON.parse(localStorage.getItem("Orders") || "[]");
+
+    if (!orders.includes(orderId)) {
+      orders.push(orderId);
+      localStorage.setItem("Orders", JSON.stringify(orders));
+    }
+  };
+
   useEffect(() => {
     const totalPrice = tariffPrice + optionPrice;
     setValue("price", totalPrice);
   }, [tariffPrice, optionPrice, setValue]);
 
-  const [currentView, setCurrentView] = useState<Window>(Window.MAIN_FORM);
+  useEffect(() => {
+    const fetchOrderData = async (orderId: string) => {
+      try {
+        const response = await axios.get(`/api/order/${orderId}`, {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+        });
+        console.log("Order data successfully fetched:", response.data);
+        if (
+          response.data.status !== "cancelled" ||
+          response.data.status !== "finished"
+        ) {
+          setOrderData(response.data);
+          setCurrentView(Window.ORDER_STATUS);
+        }
+        console.log(response.data.status);
+      } catch (error) {
+        console.error("Error fetching order data:", error);
+      }
+    };
+
+    const orders = JSON.parse(localStorage.getItem("Orders") || "[]");
+    if (orders.length > 0) {
+      const lastOrderId = orders[orders.length - 1];
+      console.log("Последний orderId:", lastOrderId);
+      fetchOrderData(lastOrderId);
+    }
+  }, []);
+
+  const sendOrderData = async (data: IFormValues) => {
+    const times = dayjs(data.time).format();
+
+    try {
+      const response = await axios.post(
+        "/api/order",
+        { ...data, time: times },
+        {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+        }
+      );
+      console.log("Order successfully sent:", response.data);
+      setOrderData(response.data);
+      addOrderToLocalStorage(response.data.orderId);
+    } catch (error) {
+      console.error("Axios error message:", error);
+    }
+  };
 
   const onSubmit: SubmitHandler<IFormValues> = (data) => {
-    console.log(data);
-    setCurrentView(Window.ORDER_STATUS);
+    sendOrderData(data);
+
+    dispatch(showLoader());
+    setTimeout(() => {
+      setCurrentView(Window.ORDER_STATUS);
+      dispatch(hideLoader());
+    }, 2000);
   };
 
   return (
     <div className={styles.wrapper}>
       <FormProvider {...form}>
-        {currentView === Window.MAIN_FORM && (
+        {/* {currentView === Window.MAIN_FORM && (
           <MainForm onSubmit={onSubmit} setCurrentView={setCurrentView} />
         )}
         {currentView === Window.WINDOW_DATE && (
@@ -95,8 +166,29 @@ const Order: FC = () => {
           <WindowOptions setCurrentView={setCurrentView} />
         )}
         {currentView === Window.ORDER_STATUS && (
-          <OrderStatus setCurrentView={setCurrentView} />
-        )}
+          <OrderStatus setCurrentView={setCurrentView} orderData={orderData} />
+        )} */}
+
+        <div className={styles.viewWrapper}>
+          <MainForm
+            onSubmit={onSubmit}
+            setCurrentView={setCurrentView}
+            currentView={currentView}
+          />
+          <WindowDate
+            setCurrentView={setCurrentView}
+            currentView={currentView}
+          />
+          <WindowOptions
+            setCurrentView={setCurrentView}
+            currentView={currentView}
+          />
+          <OrderStatus
+            setCurrentView={setCurrentView}
+            currentView={currentView}
+            orderData={orderData}
+          />
+        </div>
       </FormProvider>
     </div>
   );

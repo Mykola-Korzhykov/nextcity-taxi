@@ -23,6 +23,7 @@
 }
 
 .field {
+  transition: border 0.3s ease;
   display: flex;
   align-items: center;
   background: $gray-1;
@@ -31,6 +32,7 @@
   width: 100%;
   border-radius: 15px;
   &:hover {
+    transition: border 0.3s ease;
     border: 2px solid $theme-color;
   }
 }
@@ -197,14 +199,18 @@
   }
 }
 
-// .submitButton {
-//   font-size: 19px;
-// }
-
 .show {
   display: block;
 }
 
 .hide {
   display: none;
+}
+
+.viewWrapper {
+  display: inline-block;
+}
+
+.submitButton span {
+  margin-left: 20px;
 }

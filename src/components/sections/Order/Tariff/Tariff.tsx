@@ -16,7 +16,7 @@ const Tariff: FC = () => {
     <div className={styles.wrapper}>
       <Swiper
         spaceBetween={15}
-        slidesPerView={3.2}
+        slidesPerView={3}
         onInit={() => setIsInitialized(true)}
       >
         {tariffs.map((tariff, index) => {

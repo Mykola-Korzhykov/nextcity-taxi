@@ -59,6 +59,7 @@ const YandexMap: FC = () => {
         overflow: "hidden",
         marginTop: "20px",
       }}
+      data-aos="fade-left"
     >
       <div id="map" style={{ width: "800px", height: "100%" }} />
     </div>

@@ -12,9 +12,11 @@ export interface IAdditional {
 export interface IMainForm {
   setCurrentView: (view: Window) => void;
   onSubmit: (data: any) => void;
+  currentView?: any;
 }
 
 export interface ICallbackBtn {
   setCurrentView: (view: Window) => void;
   buttonText?: string;
+  currentView?: any;
 }

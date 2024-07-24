@@ -6,5 +6,11 @@
 }
 
 .menuItem {
+  @include transition();
   margin-right: 35px;
+
+  &:hover {
+    @include transition();
+    opacity: 0.7;
+  }
 }

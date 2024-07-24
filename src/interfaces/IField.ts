@@ -11,15 +11,26 @@ export type TDropArguments = {
   addedIndex: number;
 };
 
+export interface IDriver {
+  name: string;
+  phone: string;
+}
+
+export interface ICar {
+  model: string;
+  color: string;
+  licensePlate: string;
+}
+
 export interface IFormValues {
   orderId?: number;
   fields: TField[];
   tariff: "economy" | "comfort" | "business" | "test";
   phone: string;
-  date: Date | null;
-  time: Dayjs | null;
+  date: Date | null | string;
+  time: Dayjs | null | string;
   options: Array<{ name: string; value: boolean }>;
-  status?: "wait" | "confirmed" | "cancelled";
+  status?: "wait" | "confirmed" | "cancelled" | "finished";
   price: number;
   car?: ICar;
   driver?: IDriver;
@@ -36,15 +47,4 @@ export interface IOrderFields extends IFieldActions {
 
 export interface IMemoizedFields extends IFieldActions {
   fields: TField[];
-}
-
-export interface IDriver {
-  name: string;
-  phone: string;
-}
-
-export interface ICar {
-  model: string;
-  color: string;
-  licensePlate: string;
 }

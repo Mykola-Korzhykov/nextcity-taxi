@@ -6,23 +6,28 @@
   visibility: hidden;
 }
 
+.wrapper {
+  margin-top: 10px;
+}
+
 .card {
+  @include transition();
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5px 20px 5px 20px;
+  padding: 5px 0;
   border: 2px solid #fff;
   border-radius: 15px;
   background-color: #fff;
   cursor: pointer;
   transition: transform 0.3s, box-shadow 0.3s;
   z-index: 3;
-}
 
-.card:hover {
-  background-color: #f9f9f9;
-  transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  &:hover {
+    @include transition();
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 }
 
 .selected {
@@ -39,9 +44,11 @@
   display: block;
   width: 52px;
   height: 52px;
+  cursor: pointer;
 }
 
 .label {
   font-size: 21px;
   font-weight: bold;
+  cursor: pointer;
 }
