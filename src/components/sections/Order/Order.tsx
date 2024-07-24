@@ -123,12 +123,18 @@ const Order: FC = () => {
   }, []);
 
   const sendOrderData = async (data: IFormValues) => {
+    const times = dayjs(data.time).format();
+
     try {
-      const response = await axios.post("/api/order", data, {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-      });
+      const response = await axios.post(
+        "/api/order",
+        { ...data, time: times },
+        {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+        }
+      );
       console.log("Order successfully sent:", response.data);
       setOrderData(response.data);
       addOrderToLocalStorage(response.data.orderId);

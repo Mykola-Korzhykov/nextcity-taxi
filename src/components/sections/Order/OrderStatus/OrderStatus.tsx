@@ -50,7 +50,9 @@ const OrderStatus: FC<IOrderStatus> = ({
   useEffect(() => {
     if (orderData && orderData.orderId) {
       fetchOrderStatus();
-      setOrderInterval(setInterval(fetchOrderStatus, 8000));
+      if (view == Window.ORDER_STATUS) {
+        setOrderInterval(setInterval(fetchOrderStatus, 5000));
+      }
     }
     return () => {
       if (orderInterval) {
@@ -104,6 +106,7 @@ const OrderStatus: FC<IOrderStatus> = ({
         removeOrder(orderData.orderId);
         console.log(`Order ${orderData.orderId} successfully cancelled.`);
       }
+      clearInterval(orderInterval);
       dispatch(showLoader());
       setTimeout(() => {
         setCurrentView(Window.MAIN_FORM);
@@ -120,6 +123,7 @@ const OrderStatus: FC<IOrderStatus> = ({
     removeOrder(currentOrder.orderId);
     reset();
     setCurrentView(Window.MAIN_FORM);
+    clearInterval(orderInterval);
   };
 
   return (
