@@ -4,7 +4,7 @@ const Rules = () => {
   return (
     <section className={styles.section}>
       <div className="container">
-        <h1 className={styles.title}>ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ INTERCITY</h1>
+        <h1 className={styles.title}>ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ NEXTCITY</h1>
         <h2 className={styles.description}>
           Данный документ представляет собой Пользовательское соглашение (далее
           – "Соглашение") между вами (далее – "Пользователь") и [Название

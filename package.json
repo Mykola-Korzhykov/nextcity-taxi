@@ -1,5 +1,6 @@
 {
-  "name": "intercity-taxi",
+  "name": "nextcity-taxi",
+  "description": "Front-End part of web-app for Next City Taxi in Rossosh, Russia.",
   "version": "1.0",
   "private": true,
   "scripts": {
