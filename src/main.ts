@@ -27,9 +27,9 @@ const bootstrap = async () => {
 
   if (process.env.NODE_ENV === 'development') {
     const config = new DocumentBuilder()
-      .setTitle('InterCity Taxi | API')
+      .setTitle('NextCity | API')
       .setDescription(
-        'API for web application for intercity taxi in Rossoh, Russia.',
+        'API for web application for Next City Taxi in Rossoh, Russia.',
       )
       .setVersion('1.0')
       .build()

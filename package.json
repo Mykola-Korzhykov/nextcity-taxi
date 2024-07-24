@@ -1,7 +1,7 @@
 {
-  "name": "intercity-taxi",
+  "name": "nextcity-taxi",
   "version": "1.0",
-  "description": "Back-End part of web-app for intercity taxi in Rossosh, Russia.",
+  "description": "Back-End part of web-app for Next City Taxi in Rossosh, Russia.",
   "author": "Mykola Korzhykov",
   "private": true,
   "license": "UNLICENSED",

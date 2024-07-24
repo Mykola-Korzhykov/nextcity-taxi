@@ -1,6 +1,6 @@
-# Intercity Taxi | Back-End (Nest JS)
+# NextCity Taxi | Back-End (Nest JS)
 
-Back-End part of web-app for intercity taxi in Rossosh, Russia.
+Back-End part of web-app for Next City Taxi in Rossosh, Russia.
 
 ## Бот
 
