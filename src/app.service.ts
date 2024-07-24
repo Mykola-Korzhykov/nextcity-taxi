@@ -17,6 +17,7 @@ import { ConfigService } from '@nestjs/config'
 import extractOrderId from 'helpers/extractOrderId'
 import { infoLabels, updateDriverInfo } from 'helpers/formatDriver'
 import createOrderInfo from 'helpers/createOrderInfo'
+import extractNumber from 'helpers/extractNumber'
 
 type ModeType = 'all' | 'unfinished'
 
@@ -315,7 +316,10 @@ export class AppService {
         return false
       }
 
-      await order.updateOne({ price, status: Status.CONFIRMED })
+      await order.updateOne({
+        price: extractNumber(price),
+        status: Status.CONFIRMED,
+      })
 
       ctx.reply(
         `✅ Информация о заказе успешно обновлена!\n${price ? `\n💲 Цена: ${price}\n` : ''}\n🆔 ID заказа: ${orderId}`,
