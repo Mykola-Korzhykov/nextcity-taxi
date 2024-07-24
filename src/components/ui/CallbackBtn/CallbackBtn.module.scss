@@ -11,20 +11,37 @@
 }
 
 .callbackIcon {
-  position: absolute;
-  padding: 13px;
   background-color: #ce1e1e;
-  border-radius: 15px;
-  width: 47px;
-  height: 47px;
-  cursor: pointer;
-  z-index: 1000;
-
+  position: absolute;
+  width: 44.86px;
+  height: 44.86px;
   & svg {
+    fill: #fff;
     & path {
-      width: 20px;
-      height: 20px;
+      fill: #fff;
+      width: 18px;
+      height: 18px;
       transition: fill 0.2s ease !important;
+      z-index: 2001;
     }
   }
 }
+// .callbackIcon {
+//   position: absolute;
+//   padding: 12px;
+//   background-color: #ce1e1e;
+//   border-radius: 15px;
+//   width: 44.86px;
+//   height: 44.86px;
+//   cursor: pointer;
+//   z-index: 1000;
+
+//   & svg {
+//     & path {
+//       width: 18px;
+//       height: 18px;
+//       transition: fill 0.2s ease !important;
+//       z-index: 2001;
+//     }
+//   }
+// }
