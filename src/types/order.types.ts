@@ -65,7 +65,7 @@ export enum Tariff {
   ECONOMY = 'economy',
   COMFORT = 'comfort',
   BUSINESS = 'business',
-  TEST = 'test',
+  MINIVAN = 'MINIVAN',
 }
 
 export enum Status {
@@ -73,6 +73,13 @@ export enum Status {
   CONFIRMED = 'confirmed',
   CANCELLED = 'cancelled',
   FINISHED = 'finished',
+}
+
+export const tariffLabels = {
+  economy: 'Эконом',
+  comfort: 'Комфорт',
+  business: 'Бизнес',
+  minivan: 'Минивэн',
 }
 
 export const isValidTariff = (value: string): value is Tariff => {

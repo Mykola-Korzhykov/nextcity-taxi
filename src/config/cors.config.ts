@@ -9,7 +9,8 @@ const getCorsConfig = async () => ({
     'Content-Type',
     'Authorization',
   ],
-  methods: ['GET', 'PUT', 'OPTIONS', 'POST', 'DELETE'],
+  credentials: true,
+  methods: ['GET', 'PATCH', 'POST', 'DELETE'],
 })
 
 export default getCorsConfig

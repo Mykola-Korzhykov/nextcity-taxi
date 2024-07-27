@@ -37,9 +37,7 @@ const bootstrap = async () => {
     SwaggerModule.setup('/api/docs', app, document)
   }
 
-  if (process.env.NODE_ENV === 'production') {
-    app.enableCors(await getCorsConfig())
-  }
+  app.enableCors(await getCorsConfig())
 
   await app.register(fastifyCsrf)
   await app.listen(process.env.PORT || 5000)
