@@ -1,9 +1,13 @@
 import styles from "./Phone.module.scss";
 
+import PhoneIcon from "@img/layout/header/phone.svg";
+
 const Phone = () => {
+  const phone = process.env.PHONE;
+
   return (
-    <a href="tel+89518516363" className={styles.phone}>
-      8 (951) 851-63-63
+    <a href={`tel:${phone}`} className={styles.button}>
+      <PhoneIcon />
     </a>
   );
 };

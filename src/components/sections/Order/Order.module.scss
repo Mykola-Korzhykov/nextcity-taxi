@@ -3,12 +3,27 @@
 
 .wrapper {
   position: relative;
-  width: 390px;
   padding-top: 60px;
+
+  @include mq($tablet-large) {
+    padding-top: 0;
+    margin: 50px 0;
+    width: 100%;
+  }
+
+  @include mq($phone) {
+    padding: 0;
+  }
+}
+
+.viewWrapper {
+  @include mq($tablet-large) {
+    width: 100%;
+  }
 }
 
 .title {
-  font-size: 26px;
+  @include font-size(26px);
   font-weight: 700;
   margin-bottom: 30px;
 }
@@ -49,12 +64,12 @@
 .routeInput {
   padding-left: 13px;
   width: 68%;
-  font-size: 18px;
+  @include font-size(18px);
   font-weight: 600;
   height: 24px;
   overflow-y: hidden;
   &::placeholder {
-    font-size: 18px;
+    @include font-size(18px);
     font-weight: 400;
   }
 }
@@ -64,14 +79,14 @@
   text-align: center;
   border-radius: 5px;
   border-width: 1px;
-  font-size: 13px;
+  @include font-size(13px);
   font-weight: 800;
   padding: 4px;
   border: 1px solid $gray-3;
 
   &::placeholder {
     color: #999;
-    font-size: 11px;
+    @include font-size(11px);
     font-weight: 400;
   }
   &::-webkit-input-placeholder {
@@ -89,6 +104,10 @@
   &:-ms-input-placeholder {
     /* IE 10+ */
     color: #999;
+  }
+
+  @include mq($phone) {
+    margin-right: 5px;
   }
 }
 
@@ -131,7 +150,7 @@
 .createButton {
   position: relative;
   display: block;
-  width: 52px;
+  width: 50px;
   height: 50px;
   left: 2px;
   margin-left: auto;
@@ -150,6 +169,17 @@
     & path {
       fill: $white-1;
     }
+
+    @include mq($phone) {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  @include mq($phone) {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
   }
 }
 
@@ -211,6 +241,14 @@
   display: inline-block;
 }
 
+.submitButton {
+  @include flexible();
+  justify-content: space-between;
+  padding-right: 18px;
+  padding-left: 18px;
+}
+
 .submitButton span {
+  color: #ffd613;
   margin-left: 20px;
 }

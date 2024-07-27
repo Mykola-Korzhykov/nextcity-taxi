@@ -10,7 +10,10 @@ const CallbackBtn: FC<ICallbackBtn> = ({
 }) => {
   return (
     <div className={styles.wrapperBtn}>
-      <div className={styles.callbackIcon}>
+      <div
+        className={styles.callbackIcon}
+        onClick={() => setCurrentView(Window.MAIN_FORM)}
+      >
         <Callback />
       </div>
       <button

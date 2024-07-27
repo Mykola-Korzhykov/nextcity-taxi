@@ -10,7 +10,7 @@ const BtnOptions = () => {
         <Date />
       </div>
       <span>Доп. опции</span>
-      <div className={styles.additionalIcon}>
+      <div className={`${styles.additionalIcon} ${styles.additionalArrow}`}>
         <Arrow />
       </div>
     </div>

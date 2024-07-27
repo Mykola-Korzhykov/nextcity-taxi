@@ -7,6 +7,7 @@ import {
 } from "react-hook-form";
 import axios from "axios";
 import dayjs from "dayjs";
+import "dayjs/locale/ru";
 import { useAppDispatch } from "@store/hook";
 
 import MainForm from "./MainForm";
@@ -16,11 +17,13 @@ import OrderStatus from "./OrderStatus/OrderStatus";
 
 import { hideLoader, showLoader } from "@store/slices/loaderSlice";
 import { OptionsData } from "./Additional/WindowOption/OptionsData";
-import { tariffs } from "./Tariff/tariffData";
+import { getLabelByValue, tariffs } from "./Tariff/tariffData";
 
 import { Window } from "interfaces/IAdditional";
 import { IFormValues } from "interfaces/IField";
 import styles from "./Order.module.scss";
+import Swal from "sweetalert2";
+import { api } from "core/http";
 
 const Order: FC = () => {
   const [currentView, setCurrentView] = useState<Window>(Window.MAIN_FORM);
@@ -95,12 +98,12 @@ const Order: FC = () => {
   useEffect(() => {
     const fetchOrderData = async (orderId: string) => {
       try {
-        const response = await axios.get(`/api/order/${orderId}`, {
+        const response = await api.get(`/order/${orderId}`, {
           headers: {
             "Content-Type": "application/json; charset=utf-8",
           },
         });
-        console.log("Order data successfully fetched:", response.data);
+
         if (
           response.data.status !== "cancelled" ||
           response.data.status !== "finished"
@@ -108,16 +111,15 @@ const Order: FC = () => {
           setOrderData(response.data);
           setCurrentView(Window.ORDER_STATUS);
         }
-        console.log(response.data.status);
-      } catch (error) {
-        console.error("Error fetching order data:", error);
+      } catch (error: any) {
+        Swal.fire({ title: error?.name, text: error?.message });
       }
     };
 
     const orders = JSON.parse(localStorage.getItem("Orders") || "[]");
     if (orders.length > 0) {
       const lastOrderId = orders[orders.length - 1];
-      console.log("Последний orderId:", lastOrderId);
+
       fetchOrderData(lastOrderId);
     }
   }, []);
@@ -126,8 +128,8 @@ const Order: FC = () => {
     const times = dayjs(data.time).format();
 
     try {
-      const response = await axios.post(
-        "/api/order",
+      const response = await api.post(
+        "/order",
         { ...data, time: times },
         {
           headers: {
@@ -135,11 +137,11 @@ const Order: FC = () => {
           },
         }
       );
-      console.log("Order successfully sent:", response.data);
+
       setOrderData(response.data);
       addOrderToLocalStorage(response.data.orderId);
-    } catch (error) {
-      console.error("Axios error message:", error);
+    } catch (error: any) {
+      Swal.fire({ title: error?.name, text: error?.message });
     }
   };
 

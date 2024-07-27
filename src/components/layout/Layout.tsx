@@ -8,6 +8,9 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 import { hideLoader } from "@store/slices/loaderSlice";
 import { Montserrat } from "next/font/google";
+import useOnlineStatus from "@hooks/useOnlineStatus";
+import useHasWindow from "@hooks/useHasWindow";
+import LostConnection from "@components/sections/LostConnection/LostConnection";
 
 type Props = {
   children: ReactNode;
@@ -22,6 +25,9 @@ const montserrat = Montserrat({
 const Layout: FC<Props> = ({ children }) => {
   const dispatch = useAppDispatch();
 
+  const isOnline = useOnlineStatus();
+  const hasWindow = useHasWindow();
+
   useEffect(() => {
     setTimeout(() => {
       dispatch(hideLoader());
@@ -33,13 +39,18 @@ const Layout: FC<Props> = ({ children }) => {
   return (
     <div className={`next-layout ${montserrat.className}`}>
       <Loader />
-      <>
-        <div style={{ flex: "1 0 auto" }}>
-          <Header />
-          <main>{children}</main>
-        </div>
-        <Footer />
-      </>
+
+      {isOnline && hasWindow && (
+        <>
+          <div style={{ flex: "1 0 auto" }}>
+            <Header />
+            <main>{children}</main>
+          </div>
+          <Footer />
+        </>
+      )}
+
+      {!isOnline && hasWindow && <LostConnection />}
     </div>
   );
 };

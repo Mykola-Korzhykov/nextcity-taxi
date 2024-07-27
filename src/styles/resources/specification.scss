@@ -145,7 +145,7 @@ button {
   padding: 8px 0px;
   border-radius: 15px;
   background: $theme-color;
-  font-size: 22px;
+  @include font-size(22px);
   font-weight: 600 !important;
   text-align: center;
   display: block;
@@ -163,17 +163,31 @@ button {
   @include transition();
   opacity: 0;
   position: absolute;
-  transform: translateX(-100px);
+  left: -100px;
+
   pointer-events: none;
   visibility: hidden;
   width: 450px;
+
+  @include mq($laptop) {
+    width: 400px;
+  }
+
+  @include mq($tablet-large) {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  @include mq($phablet) {
+    width: 90%;
+  }
 }
 
 .viewActive {
   @include transition();
   opacity: 1;
   position: relative;
-  transform: translate(0);
+  left: 0;
   pointer-events: visible;
   visibility: visible;
 }
@@ -185,7 +199,7 @@ button {
   overflow: hidden;
   width: 100%;
   max-width: none;
-  z-index: 1;
+  z-index: 0;
   &:after {
     content: "";
     position: absolute;
@@ -284,7 +298,27 @@ input::-webkit-inner-spin-button {
   overflow: hidden;
 }
 
+.flare {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 45px;
+  transform: skewX(-45deg); // Наклон
+  animation: flareAnimation;
+  left: -150%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.4)
+  );
+  animation: flareAnimation 3s infinite linear; // Время и тип анимации можно менять
+}
+
 /* ---- Other ---- */
+.swal2-container {
+  font-family: "__Montserrat_5db7e3", sans-serif !important;
+}
+
 .swal2-styled.swal2-confirm {
   border-radius: 0 !important;
   background-color: $theme-color !important;

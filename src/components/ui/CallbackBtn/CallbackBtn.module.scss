@@ -11,11 +11,24 @@
 }
 
 .callbackIcon {
+  @include transition();
+  position: relative;
   background-color: #ce1e1e;
   position: absolute;
-  width: 44.86px;
-  height: 44.86px;
+  width: 46px;
+  height: 46px;
+  z-index: 2;
+  border-radius: 15px;
+
+  &:hover {
+    @include transition();
+    opacity: 0.7;
+  }
+  cursor: pointer;
   & svg {
+    @include center-element();
+    width: 25px;
+    height: 25px;
     fill: #fff;
     & path {
       fill: #fff;

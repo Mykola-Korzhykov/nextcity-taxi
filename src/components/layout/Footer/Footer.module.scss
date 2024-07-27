@@ -5,3 +5,103 @@
   flex: 0 0 auto;
   padding: 50px 0;
 }
+
+.copyright {
+  @include font-size(25px);
+
+  @include mq($phablet) {
+    margin-bottom: 20px;
+  }
+}
+
+.row {
+  @include flexible();
+  justify-content: space-between;
+
+  @include mq($tablet) {
+    flex-direction: column-reverse;
+    row-gap: 50px;
+  }
+}
+
+.contacts {
+  @include flexible();
+  position: relative;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
+.other {
+  @include flexible();
+  column-gap: 30px;
+
+  @include mq($tablet-large) {
+    flex-direction: column;
+    column-gap: 0;
+    row-gap: 15px;
+  }
+}
+
+.telegram,
+.whatsapp,
+.phone,
+.email {
+  @include transition();
+  @include flexible();
+  position: relative;
+  font-weight: 600;
+  column-gap: 10px;
+
+  &:hover {
+    @include transition();
+    opacity: 0.8;
+  }
+}
+
+.phone {
+  &::before {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: url("../../../../public/img/layout/footer/phone.png") no-repeat
+      center top / cover;
+  }
+}
+
+.telegram {
+  color: #29b6f6;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: url("../../../../public/img/layout/footer/telegram.png")
+      no-repeat center top / cover;
+  }
+}
+
+.whatsapp {
+  color: #40c351;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: url("../../../../public/img/layout/footer/whatsapp.png")
+      no-repeat center top / cover;
+  }
+}
+
+.email {
+  &::before {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: url("../../../../public/img/layout/footer/email.png") no-repeat
+      center top / cover;
+  }
+}

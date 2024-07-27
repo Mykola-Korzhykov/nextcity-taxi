@@ -25,13 +25,11 @@ const Header: FC = () => {
     <header
       className={`${styles.wrapper} ${isSticky ? styles.sticky : ""}`}
       id="header"
-      data-aos="fade-down"
     >
       <div className="container">
         <nav className={styles.navigation}>
           <Logo />
           <Menu />
-          <Phone />
         </nav>
       </div>
     </header>

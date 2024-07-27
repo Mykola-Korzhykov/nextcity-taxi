@@ -14,7 +14,7 @@
     .item {
       display: block;
       height: 54px;
-      font-size: 18px;
+      @include font-size(18px);
       font-weight: 900;
       padding: 10px 8px 10px 16px;
       &:hover {

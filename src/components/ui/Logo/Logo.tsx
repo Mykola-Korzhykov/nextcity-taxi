@@ -5,7 +5,7 @@ import styles from "./Logo.module.scss";
 
 const Logo = () => {
   return (
-    <Link href="/" className={styles.logo}>
+    <Link href="/" className={styles.logo} data-aos="fade-right">
       <LogoIcon />
     </Link>
   );

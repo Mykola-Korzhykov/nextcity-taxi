@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, useState, useRef } from "react";
+import { FC, ChangeEvent, useState, useRef, useEffect } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import DGDIcon from "@img/ui/Field/dgd.svg";
 import CreateIcon from "@img/ui/Field/create.svg";
@@ -8,6 +8,8 @@ import Select from "@components/ui/Select/Select";
 
 import { IFormValues, IOrderFields } from "interfaces/IField";
 import styles from "./Order.module.scss";
+import Swal from "sweetalert2";
+import useClickOutside from "@hooks/useClickOutside";
 
 const OrderField: FC<IOrderFields> = ({ createField, removeField, index }) => {
   const [showSelect, setShowSelect] = useState<boolean>(false);
@@ -39,8 +41,6 @@ const OrderField: FC<IOrderFields> = ({ createField, removeField, index }) => {
       );
       const data = await response.json();
 
-      console.log("Полный ответ API:", data);
-
       if (
         data.response &&
         data.response.GeoObjectCollection &&
@@ -70,8 +70,6 @@ const OrderField: FC<IOrderFields> = ({ createField, removeField, index }) => {
             };
           }
         );
-
-        console.log("Все подсказки:", suggestions);
 
         const unwantedPatterns =
           /Садоводческое|некоммерческое|товарищество|СНТ|садоводство|Гаражный|гаражное|кооператив|река|остров|улица/i;
@@ -106,16 +104,12 @@ const OrderField: FC<IOrderFields> = ({ createField, removeField, index }) => {
           return indexA - indexB;
         });
 
-        console.log("Фильтрованные подсказки:", sortedSuggestions);
-        console.log(sortedSuggestions.length);
-
         return sortedSuggestions;
       } else {
-        console.log("Подсказки не найдены.");
         return [];
       }
-    } catch (error) {
-      console.error("Ошибка при получении подсказок:", error);
+    } catch (error: any) {
+      Swal.fire({ title: error?.name, text: error?.message });
       return [];
     }
   };
@@ -139,6 +133,11 @@ const OrderField: FC<IOrderFields> = ({ createField, removeField, index }) => {
       setShowSelect(false);
     }
   };
+
+  useClickOutside(selectRef, showSelect, () => {
+    setShowSelect(false);
+    setValue(`fields.${index}.route`, "");
+  });
 
   return (
     <div className={styles.fieldWrapper}>
@@ -164,7 +163,7 @@ const OrderField: FC<IOrderFields> = ({ createField, removeField, index }) => {
           />
           <div>
             <input
-              type="number"
+              type="text"
               placeholder={"Подъезд"}
               className={styles.entranceInput}
               {...register(`fields.${index}.entrance`)}

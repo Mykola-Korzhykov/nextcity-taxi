@@ -5,19 +5,61 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  cursor: pointer;
   padding-bottom: 18px;
+
+  @include mq($phone) {
+    flex-direction: column;
+    row-gap: 20px;
+  }
 }
 
 .additionalItem {
+  @include transition();
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 16px;
+  @include font-size(16px);
   font-weight: bold;
+  transform: translateX(0);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+
+  &:hover .additionalArrow {
+    @include transition();
+    transform: translateX(5px);
+
+    & svg path {
+      fill: #000 !important;
+    }
+  }
+
+  &:hover .additionalIcon {
+    & svg {
+      @include transition();
+    }
+
+    & svg path {
+      @include transition();
+    }
+
+    & svg path {
+      @include transition();
+      fill: $theme-color;
+    }
+  }
+
+  span {
+    @include transition();
+  }
+
+  &:hover span {
+    @include transition();
+    color: $theme-color;
+  }
 }
 
 .additionalIcon {
+  @include transition();
   display: block;
   width: 30px;
   height: 30px;
@@ -27,27 +69,44 @@
 // WindowDate and WindowOptions
 
 .title {
-  font-size: 29px;
+  @include font-size(29px);
   font-weight: 800;
   margin-bottom: 26px;
+
+  @include mq($phone) {
+    @include font-size(18px);
+    text-align: center;
+  }
 }
 
 .text {
-  font-size: 16px;
+  @include font-size(16px);
   font-weight: bold;
+  margin-right: 10px;
+
+  @include mq($phone) {
+    margin-bottom: 10px;
+    margin-right: 0;
+  }
 }
 
 .date {
-  display: flex;
-  justify-content: space-between;
+  @include flexible();
   align-items: center;
   margin-bottom: 21px;
+
+  @include mq($phone) {
+    flex-direction: column;
+  }
 }
 
 .time {
-  display: flex;
-  justify-content: space-between;
+  @include flexible();
   align-items: center;
+
+  @include mq($phone) {
+    flex-direction: column;
+  }
 }
 
 // DatePicker
@@ -63,7 +122,7 @@
   border: 2px solid $gray-5 !important;
   background-color: $white-1;
   border-radius: 10px;
-  font-size: 16px;
+  @include font-size(16px);
   width: 100%;
   box-sizing: border-box;
   cursor: pointer;
@@ -80,17 +139,25 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 21px;
+  @include font-size(21px);
   font-weight: 600;
   margin-bottom: 26px;
 }
 
 .label {
-  font-size: 21px;
+  @include font-size(21px);
   font-weight: 500;
   margin-right: 5px;
+
+  @include mq($phone) {
+    @include font-size(16px);
+  }
 }
 
 .price {
   color: $theme-color;
+
+  @include mq($phone) {
+    @include font-size(16px);
+  }
 }

@@ -1,4 +1,5 @@
 import { Dayjs } from "dayjs";
+import dayjs from "dayjs/locale/ru";
 
 export type TField = {
   route: string;
