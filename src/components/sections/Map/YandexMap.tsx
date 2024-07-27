@@ -1,5 +1,7 @@
 import { FC, useEffect, useState } from "react";
 
+import styles from "./Maps.module.scss";
+
 const YandexMap: FC = () => {
   const [mapInstance, setMapInstance] = useState<any>(null);
 
@@ -51,17 +53,8 @@ const YandexMap: FC = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        width: "800px",
-        height: "400px",
-        borderRadius: "30px",
-        overflow: "hidden",
-        marginTop: "20px",
-      }}
-      data-aos="fade-left"
-    >
-      <div id="map" style={{ width: "800px", height: "100%" }} />
+    <div className={styles.mapWrapper} data-aos="fade-left">
+      <div id="map" style={{ width: "100%", height: "100%" }} />
     </div>
   );
 };

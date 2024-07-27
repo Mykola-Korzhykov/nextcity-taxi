@@ -36,7 +36,7 @@
 
 .content {
   margin-top: 5px;
-  font-size: 15px;
+  @include font-size(15px);
   font-weight: 400;
 }
 
@@ -45,10 +45,16 @@
   width: 52px;
   height: 52px;
   cursor: pointer;
+  background: url("../../../../../public/img/ui/Tariff/economy.png") no-repeat
+    center top / cover;
 }
 
 .label {
-  font-size: 21px;
+  @include font-size(21px);
   font-weight: bold;
   cursor: pointer;
+
+  @include mq($phone) {
+    @include font-size(16px);
+  }
 }

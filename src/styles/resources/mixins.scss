@@ -149,18 +149,25 @@
 /* -- Menu Top Calculate -- */
 @mixin menu-top-calc() {
   top: calc(
-    $header-padding-desktop-gutter + 45px + $header-padding-desktop-gutter
+    $header-padding-desktop-gutter + 80px + $header-padding-desktop-gutter
   );
+
+  @include mq($tablet-large) {
+    top: calc(
+      $header-padding-tablet-large-gutter + 80px +
+        $header-padding-tablet-large-gutter
+    );
+  }
 
   @include mq($tablet) {
     top: calc(
-      $header-padding-tablet-gutter + 45px + $header-padding-tablet-gutter
+      $header-padding-tablet-gutter + 80px + $header-padding-tablet-gutter
     );
   }
 
   @include mq($phablet) {
     top: calc(
-      $header-padding-phablet-gutter + 27px + $header-padding-phablet-gutter
+      $header-padding-phablet-gutter + 80px + $header-padding-phablet-gutter
     );
   }
 }

@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useFormContext, Controller } from "react-hook-form";
-import EconomyIcon from "@img/ui/Tariff/economy.svg";
+import EconomyIcon from "@img/ui/Tariff/economy.png";
 
 import { tariffs } from "./tariffData";
 import { IFormValues } from "interfaces/IField";
@@ -13,14 +13,27 @@ const Tariff: FC = () => {
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-aos="fade-right">
       <Swiper
         spaceBetween={15}
         slidesPerView={3}
         onInit={() => setIsInitialized(true)}
+        breakpoints={{
+          320: {
+            slidesPerView: 2,
+          },
+          480: {
+            slidesPerView: 3,
+          }, // 576
+          // 768: {
+          //   slidesPerView: 4,
+          // },
+          // 992: {
+          //   slidesPerView: 3,
+          // },
+        }}
       >
         {tariffs.map((tariff, index) => {
-          const Icon = tariff.component;
           return (
             <SwiperSlide key={index}>
               <Controller
@@ -33,9 +46,10 @@ const Tariff: FC = () => {
                     } ${isInitialized ? "" : styles.hidden}`}
                     onClick={() => field.onChange(tariff.value)}
                   >
-                    <div className={styles.tariffIcon}>
-                      <Icon />
-                    </div>
+                    <div
+                      className={styles.tariffIcon}
+                      data-tariff={tariff.value}
+                    ></div>
                     <label className={styles.label}>{tariff.label}</label>
                     <div className={styles.content}>
                       <p>{`От ${tariff.price} ₽`}</p>

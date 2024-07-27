@@ -2,7 +2,7 @@
 @import "@resources";
 
 .text {
-  font-size: 26px;
+  @include font-size(26px);
   font-weight: 900;
 }
 

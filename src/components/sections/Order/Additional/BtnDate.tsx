@@ -10,7 +10,7 @@ const BtnDate = () => {
         <Date />
       </div>
       <span>Дата</span>
-      <div className={styles.additionalIcon}>
+      <div className={`${styles.additionalIcon} ${styles.additionalArrow}`}>
         <Arrow />
       </div>
     </div>

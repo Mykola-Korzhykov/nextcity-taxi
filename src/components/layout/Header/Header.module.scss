@@ -8,6 +8,20 @@
   position: sticky;
   top: 0;
   left: 0;
+  padding: $header-padding-desktop-gutter 0;
+  background: $white-1;
+
+  @include mq($tablet) {
+    padding: $header-padding-tablet-gutter 0;
+  }
+
+  @include mq($tablet-large) {
+    padding: $header-padding-tablet-large-gutter 0;
+  }
+
+  @include mq($phablet) {
+    padding: $header-padding-phablet-gutter 0;
+  }
 }
 
 .sticky {
@@ -16,8 +30,6 @@
 }
 
 .navigation {
-  display: flex;
-  align-items: center;
+  @include flexible();
   justify-content: space-between;
-  padding: 25px 0;
 }

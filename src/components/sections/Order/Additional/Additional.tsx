@@ -7,7 +7,7 @@ import styles from "./Additional.module.scss";
 
 const Additional: FC<IAdditional> = ({ setCurrentView }) => {
   return (
-    <div className={styles.additional}>
+    <div className={styles.additional} data-aos="fade-up">
       <div onClick={() => setCurrentView(Window.WINDOW_DATE)}>
         <BtnDate />
       </div>

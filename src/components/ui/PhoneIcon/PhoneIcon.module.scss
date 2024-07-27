@@ -2,7 +2,14 @@
 @import "@resources";
 
 .iconContent {
+  @include transition();
   display: flex;
+  cursor: pointer;
+
+  &:hover {
+    @include transition();
+    opacity: 0.8;
+  }
 }
 
 .phoneIcon {
@@ -26,7 +33,7 @@
 }
 
 .contactName {
-  font-size: 20px;
+  @include font-size(20px);
   font-weight: 700;
   align-self: end;
 }

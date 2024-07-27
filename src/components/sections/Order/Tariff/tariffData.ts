@@ -1,10 +1,8 @@
-import EconomyIcon from "@img/ui/Tariff/economy.svg";
 import { FC } from "react";
 
 interface ITariffs {
   label: string;
   value: string;
-  component: FC;
   price: number;
 }
 
@@ -12,25 +10,26 @@ export const tariffs: ITariffs[] = [
   {
     label: "Эконом",
     value: "economy",
-    component: EconomyIcon,
-    price: 115,
+    price: 100,
   },
   {
     label: "Комфорт",
     value: "comfort",
-    component: EconomyIcon,
-    price: 125,
+    price: 150,
   },
   {
     label: "Бизнес",
     value: "business",
-    component: EconomyIcon,
-    price: 150,
+    price: 200,
   },
   {
-    label: "Тест",
-    value: "test",
-    component: EconomyIcon,
-    price: 160,
+    label: "Минивэн",
+    value: "minivan",
+    price: 500,
   },
 ];
+
+export const getLabelByValue = (value: string) => {
+  const tariff = tariffs.find((tariff) => tariff.value === value);
+  return tariff ? tariff.label : null;
+};

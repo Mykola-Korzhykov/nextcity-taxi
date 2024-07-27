@@ -3,9 +3,18 @@
 .logo {
   @include transition();
   width: 230px;
+  cursor: pointer;
 
-  &:hover {
+  & svg {
     @include transition();
-    opacity: 0.7;
+
+    &:hover {
+      @include transition();
+      opacity: 0.7;
+    }
+  }
+
+  @include mq($laptop) {
+    width: 150px;
   }
 }

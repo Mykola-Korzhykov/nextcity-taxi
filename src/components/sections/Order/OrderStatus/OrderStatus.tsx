@@ -11,6 +11,9 @@ import { hideLoader, showLoader } from "@store/slices/loaderSlice";
 
 import { IFormValues } from "interfaces/IField";
 import styles from "./OrderStatus.module.scss";
+import { getLabelByValue } from "../Tariff/tariffData";
+import Swal from "sweetalert2";
+import { api } from "core/http";
 
 interface IOrderStatus {
   setCurrentView: (view: Window) => void;
@@ -37,12 +40,11 @@ const OrderStatus: FC<IOrderStatus> = ({
   const fetchOrderStatus = async () => {
     if (orderData && orderData.status !== "cancelled") {
       try {
-        const response = await axios.get(`api/order/${orderData.orderId}`);
-        console.log("Server response:", response.data);
+        const response = await api.get(`/order/${orderData.orderId}`);
 
         setCurrentOrder(response.data);
-      } catch (error) {
-        console.error("Axios error message:", error);
+      } catch (error: any) {
+        Swal.fire({ title: error?.name, text: error?.message });
       }
     }
   };
@@ -69,8 +71,6 @@ const OrderStatus: FC<IOrderStatus> = ({
 
   useEffect(() => {
     setCurrentOrder(orderData);
-    console.log(orderData);
-    console.log(currentOrder);
   }, [orderData]);
 
   const removeOrder = (orderId: number) => {
@@ -88,11 +88,10 @@ const OrderStatus: FC<IOrderStatus> = ({
   };
 
   const handleCancelOrder = async () => {
-    console.log(orderData?.orderId);
     try {
       if (orderData && orderData.orderId) {
-        await axios.patch(
-          "api/order",
+        await api.patch(
+          "/order",
           {
             orderId: orderData.orderId,
             status: "cancelled",
@@ -104,7 +103,6 @@ const OrderStatus: FC<IOrderStatus> = ({
           }
         );
         removeOrder(orderData.orderId);
-        console.log(`Order ${orderData.orderId} successfully cancelled.`);
       }
       clearInterval(orderInterval);
       dispatch(showLoader());
@@ -114,8 +112,8 @@ const OrderStatus: FC<IOrderStatus> = ({
       }, 1500);
 
       reset();
-    } catch (error) {
-      console.error("Axios error message:", error);
+    } catch (error: any) {
+      Swal.fire({ title: error?.name, text: error?.message });
     }
   };
 
@@ -149,14 +147,29 @@ const OrderStatus: FC<IOrderStatus> = ({
               <p className={styles.carInfo}>{currentOrder.car?.model}</p>
               <p className={styles.carInfo}>{currentOrder.car?.color}</p>
               <p className={styles.carInfo}>{currentOrder.car?.licensePlate}</p>
+
+              {!currentOrder.driver && !currentOrder.car && (
+                <p className={styles.textContent}>
+                  Нет информации. <br />
+                  Ожидайте.
+                </p>
+              )}
             </div>
             <div>
-              <PhoneIcon phone={currentOrder.driver?.phone} />
+              <PhoneIcon
+                phoneValue={
+                  !currentOrder.driver?.phone
+                    ? false
+                    : currentOrder.driver?.phone
+                }
+              />
             </div>
           </div>
           <div className={styles.price}>
             <span>{currentOrder.price} ₽</span>
-            <span>{currentOrder.tariff}</span>
+            <span>
+              {currentOrder.tariff && getLabelByValue(currentOrder.tariff)}
+            </span>
           </div>
         </>
       )}

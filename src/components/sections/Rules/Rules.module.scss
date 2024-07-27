@@ -1,2 +1,38 @@
 /* ---- Rules ---- */
 @import "@resources";
+
+.title {
+  @include font-size(50px);
+
+  @include mq($phablet) {
+    @include font-size(30px);
+  }
+}
+
+.description {
+  @include font-size(30px);
+  @include mq($phablet) {
+    @include font-size(20px);
+  }
+}
+
+.textTitle {
+  @include font-size(25px);
+  @include mq($phablet) {
+    @include font-size(18px);
+  }
+}
+
+.text {
+  @include font-size(16px);
+
+  @include mq($phablet) {
+    @include font-size(14px);
+  }
+}
+
+.end {
+  @include mq($phablet) {
+    @include font-size(14px);
+  }
+}
