@@ -3956,7 +3956,7 @@ react-redux@^9.1.2:
     "@types/use-sync-external-store" "^0.0.3"
     use-sync-external-store "^1.0.0"
 
-"react-smooth-dnd@patch:react-smooth-dnd@npm:0.11.1#../.yarn/patches/react-smooth-dnd-npm-0.11.1-2550ef032f.patch":
+react-smooth-dnd@0.11.1:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/react-smooth-dnd/-/react-smooth-dnd-0.11.1.tgz#8d976137854c95f8fc09aa1ebc3069f69ceed6fa"
   integrity sha512-+lVWQwPlK980VbFLtMSKfAJBt5ep37H/rVm3OnFiTpMFAghB9YQmrj3MnoIZ8tF+/niM/FFLpnSo8IgnbEY4Kg==
